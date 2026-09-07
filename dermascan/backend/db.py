@@ -92,14 +92,21 @@ def get_dashboard_stats(user_id: int):
     rows = [dict(r) for r in rows]
     total = len(rows)
 
-    condition_counts = {"Eczema": 0, "Melanoma": 0, "Acne": 0, "Psoriasis": 0}
+    try:
+        from model import CLASS_NAMES
+        condition_counts = {c: 0 for c in CLASS_NAMES}
+    except Exception:
+        condition_counts = {}
+
+    melanoma_flags = 0
     for r in rows:
-        if r["prediction"] in condition_counts:
-            condition_counts[r["prediction"]] += 1
+        pred = r["prediction"]
+        condition_counts[pred] = condition_counts.get(pred, 0) + 1
+        if "melanoma" in pred.lower():
+            melanoma_flags += 1
 
     most_common = max(condition_counts, key=condition_counts.get) if total else None
     avg_confidence = sum(r["confidence"] for r in rows) / total if total else 0
-    melanoma_flags = condition_counts["Melanoma"]
 
     return {
         "total_scans": total,

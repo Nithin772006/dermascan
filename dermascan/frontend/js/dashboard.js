@@ -2,8 +2,14 @@
 // dashboard.js — used on dashboard.html
 // ===========================================================
 const CONDITION_COLORS = {
-  Eczema: "#4fe8c9",
+  "Actinic Keratosis": "#f97316",
+  "Basal Cell Carcinoma": "#e11d48",
+  "Benign Keratosis": "#8b5cf6",
+  "Dermatofibroma": "#06b6d4",
+  "Melanocytic Nevi": "#3b82f6",
+  "Vascular Lesion": "#10b981",
   Melanoma: "#fb7185",
+  Eczema: "#4fe8c9",
   Acne: "#ffb970",
   Psoriasis: "#a78bfa"
 };

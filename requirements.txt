@@ -17,6 +17,6 @@ seaborn>=0.12.0
 # Tunnels & Notebook Support
 pyngrok>=7.0.0
 
-# Optional: Deep Learning & Model Training (Python <= 3.12)
-# Uncomment the line below if you plan to train/run the MobileNetV2 model locally:
-# tensorflow>=2.15.0
+# Deep Learning & Model Training
+tensorflow>=2.15.0
+kagglehub[pandas-datasets]>=1.0.0

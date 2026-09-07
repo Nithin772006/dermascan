@@ -23,6 +23,7 @@ Endpoints:
 
 import io
 import os
+os.environ.setdefault("TF_ENABLE_ONEDNN_OPTS", "0")
 import random
 
 from flask import Flask, request, jsonify, session, send_from_directory
@@ -42,17 +43,24 @@ app.secret_key = os.environ.get("DERMASCAN_SECRET_KEY", "dev-only-change-me-for-
 CORS(app, supports_credentials=True)
 
 MODEL_PATH = os.path.join(BACKEND_DIR, "skin_model.h5")
+MODEL_KERAS_PATH = os.path.join(BACKEND_DIR, "skin_model.keras")
 _model = None
 _using_mock = True
 
 
 def load_model_if_available():
     global _model, _using_mock
+    target_path = None
     if os.path.exists(MODEL_PATH):
+        target_path = MODEL_PATH
+    elif os.path.exists(MODEL_KERAS_PATH):
+        target_path = MODEL_KERAS_PATH
+
+    if target_path:
         import tensorflow as tf
-        _model = tf.keras.models.load_model(MODEL_PATH)
+        _model = tf.keras.models.load_model(target_path)
         _using_mock = False
-        print(f"[DermaScan] Loaded trained model from {MODEL_PATH}")
+        print(f"[DermaScan] Loaded trained model from {target_path}")
     else:
         _using_mock = True
         print("[DermaScan] No trained model found — serving MOCK predictions.")

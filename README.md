@@ -211,24 +211,28 @@ The repository includes `DermaScan_v3_LoginDashboardBot (1).ipynb` which can gen
 - **Mock Mode (`mock`)**:
   When running locally without a pre-trained model file or GPU, the system generates deterministic, reproducible mock diagnosis results based on image pixel sums, allowing full UI/UX testing without large weight files.
 
-### Supported Disease Classes
+### Supported Disease Classes (HAM10000)
 
-1. **Acne**
-2. **Eczema**
-3. **Melanoma**
-4. **Psoriasis**
+1. **Actinic Keratosis** (`akiec`)
+2. **Basal Cell Carcinoma** (`bcc`)
+3. **Benign Keratosis** (`bkl`)
+4. **Dermatofibroma** (`df`)
+5. **Melanocytic Nevi** (`nv`)
+6. **Vascular Lesion** (`vasc`)
+7. **Melanoma** (`mel`)
 
-### Training Your Own Model
+### Training the Model
 
-1. Organize your dataset (e.g., [HAM10000](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/DBW86T)) into class directories.
-2. Utilize the architecture defined in `dermascan/backend/model.py`:
-   ```python
-   from model import build_model
-   model = build_model(num_classes=4, fine_tune=True)
-   # Train using model.fit(...)
-   model.save("dermascan/backend/skin_model.h5")
-   ```
-3. Once saved to `dermascan/backend/skin_model.h5`, restart `app.py` to activate real inference.
+The training script automatically fetches the dataset via `kagglehub`, balances the classes, trains the MobileNetV2 transfer learning model, and saves `skin_model.h5`:
+
+```bash
+python dermascan/backend/train.py
+```
+
+Once saved to `dermascan/backend/skin_model.h5`, running `python dermascan/backend/app.py` loads the trained model:
+```text
+[DermaScan] Loaded trained model from .../skin_model.h5
+```
 
 ---
 

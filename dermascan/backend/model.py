@@ -18,7 +18,17 @@ except ImportError:
     models = None
 
 IMG_SIZE = 224
-CLASS_NAMES = ["Eczema", "Melanoma", "Acne", "Psoriasis"]
+CLASS_NAMES = [
+    "Actinic Keratosis",
+    "Basal Cell Carcinoma",
+    "Benign Keratosis",
+    "Dermatofibroma",
+    "Melanocytic Nevi",
+    "Vascular Lesion",
+    "Melanoma",
+]
+HAM10000_CODES = ["akiec", "bcc", "bkl", "df", "nv", "vasc", "mel"]
+HAM10000_TO_CLASS = dict(zip(HAM10000_CODES, CLASS_NAMES))
 
 
 def build_model(num_classes: int = len(CLASS_NAMES), fine_tune: bool = False):
@@ -35,7 +45,7 @@ def build_model(num_classes: int = len(CLASS_NAMES), fine_tune: bool = False):
     base_model.trainable = fine_tune
 
     inputs = layers.Input(shape=(IMG_SIZE, IMG_SIZE, 3))
-    x = tf.keras.applications.mobilenet_v2.preprocess_input(inputs)
+    x = layers.Rescaling(1.0 / 127.5, offset=-1.0)(inputs)
     x = base_model(x, training=fine_tune)
     x = layers.GlobalAveragePooling2D()(x)
     x = layers.Dense(128, activation="relu")(x)
