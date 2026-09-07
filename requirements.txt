@@ -1,0 +1,22 @@
+# DermaScan AI - Python Dependencies
+# Core Backend & Web Server
+Flask>=3.0.0
+flask-cors>=4.0.0
+Werkzeug>=3.0.0
+
+# Image Processing & Math
+numpy>=1.24.0
+opencv-python-headless>=4.8.0
+Pillow>=10.0.0
+
+# Data Science & Analytics
+scikit-learn>=1.3.0
+matplotlib>=3.7.0
+seaborn>=0.12.0
+
+# Tunnels & Notebook Support
+pyngrok>=7.0.0
+
+# Optional: Deep Learning & Model Training (Python <= 3.12)
+# Uncomment the line below if you plan to train/run the MobileNetV2 model locally:
+# tensorflow>=2.15.0

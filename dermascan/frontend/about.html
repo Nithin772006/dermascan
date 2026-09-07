@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — DermaScan AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="brand"><span class="brand-mark">DS</span> DermaScan AI</a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="about.html" class="active">About</a>
+      <a href="chatbot.html">AI Bot</a>
+      <a href="contact.html">Contact</a>
+      <a href="login.html" class="nav-cta" id="authNavLink">Log in</a>
+    </div>
+  </div>
+</nav>
+
+<section class="section container">
+  <div class="section-head">
+    <span class="section-tag">The project</span>
+    <h2 class="section-title">Why automated skin disease classification</h2>
+    <p class="section-desc">Skin diseases affect millions globally, and early detection is central to effective treatment — but accurate diagnosis usually requires an expert dermatologist, which is slow and costly to access. DermaScan AI uses a convolutional neural network to give both clinicians and everyday users an instant first read from a dermoscopic image, saved to a personal dashboard for tracking over time.</p>
+  </div>
+</section>
+
+<section class="section container">
+  <div class="section-head">
+    <span class="section-tag">Dataset</span>
+    <h2 class="section-title">HAM10000</h2>
+    <p class="section-desc">"Human Against Machine with 10000 training images" — a publicly available benchmark of labeled dermoscopic images, used here to train and validate the classifier.</p>
+  </div>
+  <div class="metric-grid">
+    <div class="metric-card"><div class="num">10,015</div><div class="lbl">Labeled images</div></div>
+    <div class="metric-card"><div class="num">4</div><div class="lbl">Target classes</div></div>
+    <div class="metric-card"><div class="num">224²</div><div class="lbl">Input resolution</div></div>
+    <div class="metric-card"><div class="num">80/20</div><div class="lbl">Train / validation split</div></div>
+  </div>
+</section>
+
+<section class="section container">
+  <div class="section-head">
+    <span class="section-tag">Architecture</span>
+    <h2 class="section-title">Model pipeline</h2>
+    <p class="section-desc">Images are pre-processed with OpenCV, passed through a MobileNetV2 feature extractor (transfer learning), then a custom classification head trained for this task.</p>
+  </div>
+  <div class="arch-diagram">
+    <div class="arch-block"><b>Input</b>224×224×3</div>
+    <span class="arch-arrow">→</span>
+    <div class="arch-block"><b>Preprocess</b>Resize / Normalize</div>
+    <span class="arch-arrow">→</span>
+    <div class="arch-block"><b>MobileNetV2</b>Frozen base</div>
+    <span class="arch-arrow">→</span>
+    <div class="arch-block"><b>GAP</b>Pooling</div>
+    <span class="arch-arrow">→</span>
+    <div class="arch-block"><b>Dense 128</b>ReLU + Dropout</div>
+    <span class="arch-arrow">→</span>
+    <div class="arch-block"><b>Softmax</b>4 classes</div>
+  </div>
+</section>
+
+<section class="section container">
+  <div class="section-head">
+    <span class="section-tag">Outcomes</span>
+    <h2 class="section-title">What this project delivers</h2>
+  </div>
+  <div class="timeline">
+    <div class="timeline-item"><h4>Trained deep learning model</h4><p>A CNN capable of classifying skin diseases with measurable accuracy, precision, recall and F1-score.</p></div>
+    <div class="timeline-item"><h4>Full-stack application</h4><p>Signup, login, an upload-and-diagnose flow, and a personal dashboard — not just a script.</p></div>
+    <div class="timeline-item"><h4>Clinical relevance</h4><p>Demonstrates how AI can assist doctors with early-stage detection rather than replace diagnosis.</p></div>
+    <div class="timeline-item"><h4>Research potential</h4><p>A foundation for further work in telemedicine deployment and academic research.</p></div>
+  </div>
+</section>
+
+<section class="section container">
+  <div class="section-head">
+    <span class="section-tag">Team</span>
+    <h2 class="section-title">Bug Slayers</h2>
+  </div>
+  <div class="team-grid">
+    <div class="team-card tilt-card"><div class="team-avatar">M</div><h4>Monu</h4><span>AIDS · REC Chennai</span></div>
+    <div class="team-card tilt-card"><div class="team-avatar">T2</div><h4>Teammate</h4><span>Bug Slayers</span></div>
+    <div class="team-card tilt-card"><div class="team-avatar">T3</div><h4>Teammate</h4><span>Bug Slayers</span></div>
+    <div class="team-card tilt-card"><div class="team-avatar">T4</div><h4>Teammate</h4><span>Bug Slayers</span></div>
+  </div>
+</section>
+
+<footer class="container">
+  <div class="footer-inner">
+    <p>© 2026 DermaScan AI — Internship project, Bug Slayers team.</p>
+    <div class="footer-links"><a href="index.html">Home</a><a href="contact.html">Contact</a></div>
+  </div>
+</footer>
+
+<script src="js/site.js"></script>
+<script>
+document.querySelectorAll('.tilt-card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const r = card.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width - 0.5;
+    const y = (e.clientY - r.top) / r.height - 0.5;
+    card.style.transform = `rotateY(${x * 12}deg) rotateX(${-y * 12}deg)`;
+  });
+  card.addEventListener('mouseleave', () => { card.style.transform = 'rotateY(0) rotateX(0)'; });
+});
+</script>
+</body>
+</html>

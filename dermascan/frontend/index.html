@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DermaScan AI — Skin Disease Classification</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="brand"><span class="brand-mark">DS</span> DermaScan AI</a>
+    <div class="nav-links">
+      <a href="index.html" class="active">Home</a>
+      <a href="about.html">About</a>
+      <a href="chatbot.html">AI Bot</a>
+      <a href="contact.html">Contact</a>
+      <a href="login.html" class="nav-cta" id="authNavLink">Log in</a>
+    </div>
+  </div>
+</nav>
+
+<header class="container hero">
+  <div>
+    <span class="eyebrow"><span class="dot"></span> CNN-powered dermoscopic analysis</span>
+    <h1 class="headline">Detect skin conditions <span class="accent">before they escalate.</span></h1>
+    <p class="sub">DermaScan AI classifies eczema, melanoma, acne and psoriasis from a single dermoscopic image using a deep convolutional neural network — with a personal dashboard and an AI assistant to answer your questions.</p>
+    <div class="hero-actions">
+      <a href="signup.html" class="btn btn-primary">Create free account →</a>
+      <a href="chatbot.html" class="btn btn-ghost">Ask the AI Bot</a>
+    </div>
+    <div class="hero-stats">
+      <div><div class="stat-num">4</div><div class="stat-label">Conditions classified</div></div>
+      <div><div class="stat-num">10,015</div><div class="stat-label">Training images</div></div>
+      <div><div class="stat-num">&lt;2s</div><div class="stat-label">Prediction time</div></div>
+    </div>
+  </div>
+
+  <canvas id="hero3d"></canvas>
+</header>
+
+<section class="section container">
+  <div class="section-head">
+    <span class="section-tag">Workflow</span>
+    <h2 class="section-title">From photo to prediction in three steps</h2>
+    <p class="section-desc">Sign up once — every scan after that is saved to your personal dashboard.</p>
+  </div>
+  <div class="steps">
+    <div class="step-card"><div class="step-num">01</div><h3>Create an account</h3><p>A free account keeps a private history of every image you analyze.</p></div>
+    <div class="step-card"><div class="step-num">02</div><h3>Upload & analyze</h3><p>The image is pre-processed and passed through a trained CNN.</p></div>
+    <div class="step-card"><div class="step-num">03</div><h3>Track it on your dashboard</h3><p>See every past scan, condition breakdown, and confidence trend in one place.</p></div>
+  </div>
+</section>
+
+<section class="section container" style="background:var(--bg-elevated); border-radius:24px;">
+  <div class="section-head">
+    <span class="section-tag">Capabilities</span>
+    <h2 class="section-title">Built for accuracy, scale and privacy</h2>
+  </div>
+  <div class="grid-3">
+    <div class="feature-card tilt-card"><div class="feature-icon">◆</div><h3>Multi-class classification</h3><p>A single model distinguishes between eczema, melanoma, acne and psoriasis.</p></div>
+    <div class="feature-card tilt-card"><div class="feature-icon">⚡</div><h3>Real-time prediction</h3><p>Results return in under two seconds — the experience feels instant.</p></div>
+    <div class="feature-card tilt-card"><div class="feature-icon">▦</div><h3>Personal dashboard</h3><p>Every scan, confidence score and trend is saved to your account.</p></div>
+    <div class="feature-card tilt-card"><div class="feature-icon">🤖</div><h3>AI Bot assistant</h3><p>Ask questions about skin conditions or the project, anytime.</p></div>
+    <div class="feature-card tilt-card"><div class="feature-icon">◈</div><h3>Privacy-focused</h3><p>Images are processed for the prediction only — never shared publicly.</p></div>
+    <div class="feature-card tilt-card"><div class="feature-icon">▤</div><h3>Metric-backed evaluation</h3><p>Accuracy, precision, recall and F1-score validate real performance.</p></div>
+  </div>
+</section>
+
+<section class="section container">
+  <div class="section-head">
+    <span class="section-tag">Under the hood</span>
+    <h2 class="section-title">Technology stack</h2>
+  </div>
+  <div class="stack-strip">
+    <span class="stack-pill">Python</span>
+    <span class="stack-pill">TensorFlow</span>
+    <span class="stack-pill">Keras</span>
+    <span class="stack-pill">OpenCV</span>
+    <span class="stack-pill">Flask + SQLite</span>
+    <span class="stack-pill">HAM10000 dataset</span>
+    <span class="stack-pill">Three.js</span>
+  </div>
+</section>
+
+<footer class="container">
+  <div class="footer-inner">
+    <p>© 2026 DermaScan AI — Internship project, Bug Slayers team.</p>
+    <div class="footer-links"><a href="about.html">About</a><a href="chatbot.html">AI Bot</a><a href="contact.html">Contact</a></div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="js/site.js"></script>
+<script>
+const canvas = document.getElementById('hero3d');
+if (canvas && window.THREE) {
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(55, 1, 0.1, 100);
+  camera.position.z = 5;
+
+  const wireGeo = new THREE.IcosahedronGeometry(1.6, 1);
+  const wireMat = new THREE.MeshBasicMaterial({ color: 0x4fe8c9, wireframe: true, transparent: true, opacity: 0.55 });
+  const wireMesh = new THREE.Mesh(wireGeo, wireMat);
+  scene.add(wireMesh);
+
+  const particleGeo = new THREE.IcosahedronGeometry(1.9, 3);
+  const particleMat = new THREE.PointsMaterial({ color: 0xffb970, size: 0.035 });
+  const particles = new THREE.Points(particleGeo, particleMat);
+  scene.add(particles);
+
+  scene.add(new THREE.AmbientLight(0xffffff, 1));
+
+  function resize() {
+    const w = canvas.clientWidth, h = canvas.clientHeight;
+    camera.aspect = w / h; camera.updateProjectionMatrix();
+    renderer.setSize(w, h, false);
+  }
+  window.addEventListener('resize', resize);
+  setTimeout(resize, 50);
+
+  function animate() {
+    requestAnimationFrame(animate);
+    wireMesh.rotation.y += 0.004;
+    wireMesh.rotation.x += 0.002;
+    particles.rotation.y -= 0.0025;
+    renderer.render(scene, camera);
+  }
+  animate();
+}
+
+document.querySelectorAll('.tilt-card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const r = card.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width - 0.5;
+    const y = (e.clientY - r.top) / r.height - 0.5;
+    card.style.transform = `rotateY(${x * 14}deg) rotateX(${-y * 14}deg)`;
+  });
+  card.addEventListener('mouseleave', () => { card.style.transform = 'rotateY(0) rotateX(0)'; });
+});
+</script>
+</body>
+</html>
