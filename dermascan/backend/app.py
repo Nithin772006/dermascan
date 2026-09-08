@@ -135,12 +135,15 @@ def signup():
         return jsonify({"error": "Name, email and password are all required"}), 400
     if len(password) < 6:
         return jsonify({"error": "Password must be at least 6 characters"}), 400
-    if db.get_user_by_email(email):
-        return jsonify({"error": "An account with that email already exists"}), 409
 
-    user_id = db.create_user(name, email, generate_password_hash(password))
-    session["user_id"] = user_id
-    return jsonify({"user": {"id": user_id, "name": name, "email": email}})
+    user, error, status = db.signup_user(name, email, password)
+    if error:
+        return jsonify({"error": error}), status
+
+    session["user_id"] = user["id"]
+    session["user_name"] = user["name"]
+    session["user_email"] = user["email"]
+    return jsonify({"user": user})
 
 
 @app.route("/api/login", methods=["POST"])
@@ -149,12 +152,17 @@ def login():
     email = (data.get("email") or "").strip().lower()
     password = data.get("password") or ""
 
-    user = db.get_user_by_email(email)
-    if not user or not check_password_hash(user["password_hash"], password):
-        return jsonify({"error": "Invalid email or password"}), 401
+    if not (email and password):
+        return jsonify({"error": "Email and password are required"}), 400
+
+    user, error, status = db.login_user(email, password)
+    if error:
+        return jsonify({"error": error}), status
 
     session["user_id"] = user["id"]
-    return jsonify({"user": {"id": user["id"], "name": user["name"], "email": user["email"]}})
+    session["user_name"] = user["name"]
+    session["user_email"] = user["email"]
+    return jsonify({"user": user})
 
 
 @app.route("/api/logout", methods=["POST"])
@@ -169,9 +177,11 @@ def me():
         return jsonify({"error": "Not logged in"}), 401
     user = db.get_user_by_id(session["user_id"])
     if not user:
+        if "user_name" in session and "user_email" in session:
+            return jsonify({"user": {"id": session["user_id"], "name": session["user_name"], "email": session["user_email"]}})
         session.clear()
         return jsonify({"error": "Not logged in"}), 401
-    return jsonify({"user": {"id": user["id"], "name": user["name"], "email": user["email"]}})
+    return jsonify({"user": {"id": user.get("id"), "name": user.get("name"), "email": user.get("email")}})
 
 
 # ---------- Prediction (protected) ----------
@@ -233,7 +243,11 @@ def contact():
 
 @app.route("/api/health", methods=["GET"])
 def health():
-    return jsonify({"status": "ok", "mode": "mock" if _using_mock else "trained_model"})
+    return jsonify({
+        "status": "ok",
+        "mode": "mock" if _using_mock else "trained_model",
+        "database": "supabase" if db.is_supabase_enabled() else "sqlite",
+    })
 
 
 @app.route("/api", methods=["GET"])
@@ -244,6 +258,7 @@ def api_root():
         "status": "online",
         "version": "2.0",
         "mode": "mock" if _using_mock else "trained_model",
+        "database": "supabase" if db.is_supabase_enabled() else "sqlite",
         "endpoints": [
             "/api/signup",
             "/api/login",

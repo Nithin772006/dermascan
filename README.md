@@ -20,6 +20,7 @@
   - [Installation](#installation)
   - [Running the Web Application](#running-the-web-application)
 - [Running via Jupyter Notebook / Google Colab](#-running-via-jupyter-notebook--google-colab)
+- [Supabase Setup & Configuration Guide](#-supabase-setup--configuration-guide)
 - [Deploying to Vercel](#-deploying-to-vercel)
 - [API Endpoints](#-api-endpoints)
 - [Machine Learning Model](#-machine-learning-model)
@@ -98,18 +99,20 @@ DermaScan/
 │   ├── index.html, dashboard.html, ...       # Frontend pages
 │   ├── css/style.css                         # Global glassmorphism styles & animations
 │   └── js/                                   # Frontend scripts (auth, dashboard, predict, bot)
+├── supabase_schema.sql                       # 1-Click Supabase PostgreSQL migration & RLS schema
+├── .env.example                              # Template environment variables (Supabase & Secret Key)
 ├── vercel.json                               # Vercel deployment configuration (routes & cleanUrls)
 ├── .vercelignore                             # Deployment ignore list (excludes bulky dev files)
-├── requirements.txt                          # Lean production & Vercel serverless dependencies
+├── requirements.txt                          # Lean production & Supabase dependencies
 ├── requirements-train.txt                    # Offline ML training dependencies (TF, Kaggle, CV2)
 ├── README.md                                 # Project documentation
 └── dermascan/
-    ├── backend/                              # Python Flask backend & SQLite layer
+    ├── backend/                              # Python Flask backend & data layer
     │   ├── app.py                            # Main Flask server & REST API
-    │   ├── db.py                             # Serverless-aware SQLite layer (/tmp support)
+    │   ├── db.py                             # Dual-Engine data layer (Supabase + SQLite fallback)
     │   ├── model.py                          # CNN architecture (MobileNetV2)
     │   ├── utils.py                          # Image preprocessing (Pillow & CV2 fallback)
-    │   └── dermascan.db                      # SQLite database file
+    │   └── dermascan.db                      # SQLite database file (local fallback)
     └── frontend/                             # Source frontend files (synced with public/)
 ```
 
@@ -175,6 +178,84 @@ The repository includes `DermaScan_v3_LoginDashboardBot (1).ipynb` which can gen
 2. **In Google Colab**:
    - Upload `DermaScan_v3_LoginDashboardBot (1).ipynb` to [Google Colab](https://colab.research.google.com/).
    - Run all cells. In Step 5 & 6, an **ngrok** tunnel is automatically provisioned to give you a public URL to share and test.
+
+---
+
+## ⚡ Supabase Setup & Configuration Guide
+
+DermaScan AI natively supports **[Supabase](https://supabase.com)** for:
+- **Cloud Authentication**: User signups and logins handled securely via Supabase Auth (GoTrue).
+- **PostgreSQL Database Storage**: Persistent storage for user profiles and scan history (`profiles` and `scans` tables with Row Level Security).
+- **Zero Downtime Fallback**: If Supabase credentials are not provided, the app automatically runs on local SQLite without crashing.
+
+### Step 1: Create a Free Supabase Project
+
+1. Go to [supabase.com](https://supabase.com/) and click **Start your project** (or sign in).
+2. Click **New Project**:
+   - **Name**: `DermaScan`
+   - **Database Password**: Enter a strong password (save it safely).
+   - **Region**: Choose the region closest to your location or users.
+   - **Pricing Plan**: Free Plan.
+3. Click **Create new project** and wait ~1-2 minutes for provisioning.
+
+---
+
+### Step 2: Run the Database Migration Script
+
+1. In your Supabase project dashboard, click on the **SQL Editor** tab (terminal icon on the left navigation bar).
+2. Click **New Query**.
+3. Open [`supabase_schema.sql`](supabase_schema.sql) in this repository, copy its entire contents, and paste them into the Supabase SQL Editor.
+4. Click **Run** (green button).
+5. You should see `Success. No rows returned`. This creates:
+   - `public.profiles` (User profile records).
+   - `public.scans` (Scan history and condition probability records).
+   - Automated trigger `on_auth_user_created` (automatically provisions profiles whenever a new user registers via Supabase Auth).
+   - Row Level Security (RLS) policies and performance indexes.
+
+---
+
+### Step 3: Retrieve Your Supabase API Keys
+
+1. In the Supabase dashboard, click the **Settings** gear icon at the bottom-left.
+2. Select **Data API** (or **API**).
+3. Copy the following values:
+   - **Project URL**: `https://<your-project-ref>.supabase.co`
+   - **anon / public key**: A long JWT string (e.g. `eyJhbGciOi...`).
+   - *(Optional for backend)*: **service_role key** (allows server-side administrative access).
+
+---
+
+### Step 4: Configure Environment Variables
+
+#### For Local Development:
+1. Copy [`.env.example`](.env.example) to `.env`:
+   ```bash
+   cp .env.example .env
+   ```
+2. Open `.env` and fill in your Supabase credentials:
+   ```env
+   SUPABASE_URL=https://your-project-ref.supabase.co
+   SUPABASE_KEY=your-anon-or-service-role-key
+   DERMASCAN_SECRET_KEY=your-secure-random-secret
+   ```
+3. Run the application:
+   ```bash
+   python dermascan/backend/app.py
+   ```
+   You will see:
+   ```text
+   [DermaScan] Initialized Supabase client for https://your-project-ref.supabase.co
+   [DermaScan] Using Supabase cloud database & authentication.
+   ```
+
+#### For Vercel Cloud Hosting:
+1. Go to your project on the [Vercel Dashboard](https://vercel.com/dashboard).
+2. Navigate to **Settings** -> **Environment Variables**.
+3. Add the following variables:
+   - `SUPABASE_URL`: `https://your-project-ref.supabase.co`
+   - `SUPABASE_KEY`: `your-anon-or-service-role-key`
+   - `DERMASCAN_SECRET_KEY`: `your-random-secret`
+4. Redeploy your project (or push a new commit). Your live Vercel app will now use Supabase for all user accounts and scan histories!
 
 ---
 
