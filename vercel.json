@@ -2,12 +2,12 @@
   "cleanUrls": true,
   "rewrites": [
     {
-      "source": "/api",
-      "destination": "/api/index.py"
+      "source": "/api/(.*)",
+      "destination": "/api/index.py?__route__=/api/$1"
     },
     {
-      "source": "/api/(.*)",
-      "destination": "/api/index.py"
+      "source": "/api",
+      "destination": "/api/index.py?__route__=/api"
     }
   ]
 }
