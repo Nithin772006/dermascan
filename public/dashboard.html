@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard — DermaScan AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="app-shell">
+  <aside class="sidebar">
+    <a href="index.html" class="brand"><span class="brand-mark">DS</span> DermaScan AI</a>
+    <nav class="side-nav">
+      <a href="dashboard.html" class="active"><span class="ic">▦</span> Overview</a>
+      <a href="predict.html"><span class="ic">◆</span> New scan</a>
+      <a href="about.html"><span class="ic">ⓘ</span> About the model</a>
+      <a href="chatbot.html"><span class="ic">🤖</span> AI Bot</a>
+      <a href="contact.html"><span class="ic">✉</span> Contact</a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <div class="avatar" id="userAvatar">?</div>
+        <div>
+          <div class="name" id="userName">Loading…</div>
+          <div class="email" id="userEmail"></div>
+        </div>
+      </div>
+      <div class="logout-link" id="logoutBtn"><span class="ic">⏻</span> Log out</div>
+    </div>
+  </aside>
+
+  <main class="app-main">
+    <div class="app-topbar">
+      <div>
+        <h1 id="greeting">Welcome back</h1>
+        <p>Here's a summary of your scan activity.</p>
+      </div>
+      <a href="predict.html" class="btn btn-primary">+ New scan</a>
+    </div>
+
+    <div class="stat-cards" id="statCards">
+      <div class="stat-card"><div class="top"><span class="ic teal">◆</span></div><div class="value" id="statTotal">—</div><div class="label">Total scans</div></div>
+      <div class="stat-card"><div class="top"><span class="ic amber">★</span></div><div class="value" id="statTop">—</div><div class="label">Most common result</div></div>
+      <div class="stat-card"><div class="top"><span class="ic violet">%</span></div><div class="value" id="statAvgConf">—</div><div class="label">Average confidence</div></div>
+      <div class="stat-card"><div class="top"><span class="ic danger">⚠</span></div><div class="value" id="statFlagged">—</div><div class="label">Melanoma flags</div></div>
+    </div>
+
+    <div class="dash-grid">
+      <div class="panel">
+        <h3>Condition breakdown</h3>
+        <div id="donutContainer"></div>
+      </div>
+      <div class="panel">
+        <h3>Recent scans</h3>
+        <div class="scan-list" id="recentScans">
+          <p class="empty-note">Loading…</p>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="js/guard.js"></script>
+<script src="js/dashboard.js"></script>
+</body>
+</html>

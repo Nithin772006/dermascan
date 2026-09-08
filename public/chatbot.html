@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Bot — DermaScan AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="brand"><span class="brand-mark">DS</span> DermaScan AI</a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="chatbot.html" class="active">AI Bot</a>
+      <a href="contact.html">Contact</a>
+      <a href="login.html" class="nav-cta" id="authNavLink">Log in</a>
+    </div>
+  </div>
+</nav>
+
+<section class="section container">
+  <div class="section-head">
+    <span class="section-tag">AI Bot</span>
+    <h2 class="section-title">Ask about skin conditions or this project</h2>
+    <p class="section-desc">A quick assistant for common questions — not a substitute for a dermatologist.</p>
+  </div>
+
+  <div class="chat-shell">
+    <div class="chat-suggestions" id="suggestions">
+      <div class="chat-chip" data-q="What is eczema?">What is eczema?</div>
+      <div class="chat-chip" data-q="What are melanoma warning signs?">Melanoma warning signs?</div>
+      <div class="chat-chip" data-q="How does the model work?">How does the model work?</div>
+      <div class="chat-chip" data-q="How accurate is DermaScan?">How accurate is it?</div>
+    </div>
+    <div class="chat-window" id="chatWindow">
+      <div class="chat-msg bot">Hi! I'm the DermaScan AI Bot. Ask me about eczema, melanoma, acne, psoriasis, or how this project works.</div>
+    </div>
+    <div class="chat-input-row">
+      <input type="text" id="chatInput" placeholder="Type your question...">
+      <button class="btn btn-primary" id="sendBtn">Send</button>
+    </div>
+  </div>
+</section>
+
+<footer class="container">
+  <div class="footer-inner">
+    <p>© 2026 DermaScan AI — Internship project, Bug Slayers team.</p>
+    <div class="footer-links"><a href="index.html">Home</a><a href="about.html">About</a><a href="contact.html">Contact</a></div>
+  </div>
+</footer>
+
+<script src="js/site.js"></script>
+<script src="js/chatbot.js"></script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Jupyter notebooks and backups
+*.ipynb
+*.ipynb.bak
+
+# Large binary ML models and training scripts (exceeds Lambda 250MB limit; mock mode used in serverless)
+dermascan/backend/skin_model.h5
+dermascan/backend/skin_model.keras
+dermascan/backend/train.py
+
+# Offline training dependencies
+requirements-train.txt
+
+# Python caches
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Git & OS files
+.git/
+.gitignore
+.DS_Store
+Thumbs.db

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — DermaScan AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="brand"><span class="brand-mark">DS</span> DermaScan AI</a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="chatbot.html">AI Bot</a>
+      <a href="contact.html" class="active">Contact</a>
+      <a href="login.html" class="nav-cta" id="authNavLink">Log in</a>
+    </div>
+  </div>
+</nav>
+
+<section class="section container">
+  <div class="section-head">
+    <span class="section-tag">Get in touch</span>
+    <h2 class="section-title">Questions about the project</h2>
+    <p class="section-desc">Reach out about the model, the dataset, or collaborating on the next iteration.</p>
+  </div>
+
+  <div class="contact-layout">
+    <div>
+      <div class="info-list">
+        <div class="info-item"><div class="ic">✉</div><div><h4>Email</h4><p>bugslayers.team@example.com</p></div></div>
+        <div class="info-item"><div class="ic">🏛</div><div><h4>Institution</h4><p>Rajalakshmi Engineering College, Chennai</p></div></div>
+        <div class="info-item"><div class="ic">◈</div><div><h4>Team</h4><p>Bug Slayers — AIDS Department</p></div></div>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <form id="contactForm">
+        <div class="field"><label for="name">Name</label><input type="text" id="name" required></div>
+        <div class="field"><label for="email">Email</label><input type="email" id="email" required></div>
+        <div class="field"><label for="message">Message</label><textarea id="message" rows="5" required></textarea></div>
+        <button type="submit" class="btn btn-primary">Send message</button>
+        <p class="form-status" id="formStatus">Message sent — we'll get back to you soon.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer class="container">
+  <div class="footer-inner">
+    <p>© 2026 DermaScan AI — Internship project, Bug Slayers team.</p>
+    <div class="footer-links"><a href="index.html">Home</a><a href="about.html">About</a></div>
+  </div>
+</footer>
+
+<script src="js/site.js"></script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign up — DermaScan AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="auth-shell">
+  <div class="auth-visual">
+    <a href="index.html" class="brand"><span class="brand-mark">DS</span> DermaScan AI</a>
+    <div class="pitch">
+      <h2>Start your first scan in under a minute.</h2>
+      <p>Create a free account to get a personal dashboard that tracks every image you analyze and the condition breakdown over time.</p>
+    </div>
+    <div class="scan-frame" style="max-width:340px;">
+      <div class="skin-swatch"></div>
+      <div class="lesion"></div>
+      <div class="scan-grid"></div>
+      <div class="scan-line"></div>
+      <div class="corner tl"></div><div class="corner tr"></div>
+      <div class="corner bl"></div><div class="corner br"></div>
+    </div>
+  </div>
+
+  <div class="auth-form-side">
+    <div class="auth-card">
+      <div class="kicker">Get started</div>
+      <h1>Create your account</h1>
+      <p class="switcher">Already have one? <a href="login.html">Log in</a></p>
+
+      <div class="auth-error" id="authError"></div>
+
+      <form id="signupForm">
+        <div class="field">
+          <label for="name">Full name</label>
+          <input type="text" id="name" required>
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input type="email" id="email" required>
+        </div>
+        <div class="field">
+          <label for="password">Password</label>
+          <input type="password" id="password" minlength="6" required>
+        </div>
+        <div class="field">
+          <label for="confirmPassword">Confirm password</label>
+          <input type="password" id="confirmPassword" minlength="6" required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block" id="signupBtn">Create account</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script src="js/auth.js"></script>
+</body>
+</html>

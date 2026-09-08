@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Log in — DermaScan AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="auth-shell">
+  <div class="auth-visual">
+    <a href="index.html" class="brand"><span class="brand-mark">DS</span> DermaScan AI</a>
+    <div class="pitch">
+      <h2>Every scan, tracked in one dashboard.</h2>
+      <p>Log in to pick up where you left off — your scan history, condition breakdown, and confidence trends are all saved to your account.</p>
+    </div>
+    <div class="scan-frame" style="max-width:340px;">
+      <div class="skin-swatch"></div>
+      <div class="lesion"></div>
+      <div class="scan-grid"></div>
+      <div class="scan-line"></div>
+      <div class="corner tl"></div><div class="corner tr"></div>
+      <div class="corner bl"></div><div class="corner br"></div>
+    </div>
+  </div>
+
+  <div class="auth-form-side">
+    <div class="auth-card">
+      <div class="kicker">Welcome back</div>
+      <h1>Log in to your account</h1>
+      <p class="switcher">New here? <a href="signup.html">Create an account</a></p>
+
+      <div class="auth-error" id="authError"></div>
+
+      <form id="loginForm">
+        <div class="field">
+          <label for="email">Email</label>
+          <input type="email" id="email" required>
+        </div>
+        <div class="field">
+          <label for="password">Password</label>
+          <input type="password" id="password" required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block" id="loginBtn">Log in</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script src="js/auth.js"></script>
+</body>
+</html>
