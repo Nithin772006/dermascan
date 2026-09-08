@@ -1,22 +1,12 @@
-# DermaScan AI - Python Dependencies
-# Core Backend & Web Server
+# DermaScan AI - Production Web & Serverless Dependencies (Vercel Compatible)
+# Lean dependencies (<60MB uncompressed) optimized for AWS Lambda & Vercel deployment.
+# For offline model training & Jupyter notebook execution, install requirements-train.txt instead.
+
+# Core Backend Web Server & Auth
 Flask>=3.0.0
 flask-cors>=4.0.0
 Werkzeug>=3.0.0
 
-# Image Processing & Math
+# Image Processing & Numerical Computation (Zero heavy C/GL system dependencies)
 numpy>=1.24.0
-opencv-python-headless>=4.8.0
 Pillow>=10.0.0
-
-# Data Science & Analytics
-scikit-learn>=1.3.0
-matplotlib>=3.7.0
-seaborn>=0.12.0
-
-# Tunnels & Notebook Support
-pyngrok>=7.0.0
-
-# Deep Learning & Model Training
-tensorflow>=2.15.0
-kagglehub[pandas-datasets]>=1.0.0

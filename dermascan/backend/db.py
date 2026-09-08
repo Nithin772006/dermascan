@@ -9,16 +9,51 @@ import sqlite3
 import json
 from datetime import datetime
 
-DB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "dermascan.db")
+def get_db_path() -> str:
+    """
+    Returns the SQLite database file path.
+    If running on Vercel / AWS Lambda (where the source filesystem is strictly read-only),
+    we store or copy the database to /tmp to allow write operations.
+    """
+    if "DB_PATH" in os.environ:
+        return os.environ["DB_PATH"]
+
+    is_serverless = bool(
+        os.environ.get("VERCEL")
+        or os.environ.get("AWS_LAMBDA_FUNCTION_NAME")
+        or os.environ.get("LAMBDA_TASK_ROOT")
+    )
+
+    local_db = os.path.join(os.path.dirname(os.path.abspath(__file__)), "dermascan.db")
+
+    if is_serverless:
+        import tempfile
+        tmp_dir = "/tmp" if os.path.isdir("/tmp") or os.name != "nt" else tempfile.gettempdir()
+        tmp_db = os.path.join(tmp_dir, "dermascan.db")
+        if not os.path.exists(tmp_db) and os.path.exists(local_db):
+            try:
+                import shutil
+                shutil.copy2(local_db, tmp_db)
+            except Exception as e:
+                print(f"[DermaScan DB] Warning: could not seed tmp DB from repo: {e}")
+        return tmp_db
+
+    return local_db
 
 
 def get_conn():
-    conn = sqlite3.connect(DB_PATH)
+    db_path = get_db_path()
+    conn = sqlite3.connect(db_path)
     conn.row_factory = sqlite3.Row
     return conn
 
 
 def init_db():
+    db_path = get_db_path()
+    parent = os.path.dirname(db_path)
+    if parent and not os.path.exists(parent):
+        os.makedirs(parent, exist_ok=True)
+
     conn = get_conn()
     conn.execute("""
         CREATE TABLE IF NOT EXISTS users (
@@ -42,7 +77,7 @@ def init_db():
     """)
     conn.commit()
     conn.close()
-    print(f"[DermaScan] Database ready at {DB_PATH}")
+    print(f"[DermaScan] Database ready at {db_path}")
 
 
 def create_user(name: str, email: str, password_hash: str):

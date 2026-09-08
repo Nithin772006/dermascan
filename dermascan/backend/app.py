@@ -36,10 +36,16 @@ from model import CLASS_NAMES, IMG_SIZE
 from utils import read_image_from_bytes, preprocess_image
 
 BACKEND_DIR = os.path.dirname(os.path.abspath(__file__))
-FRONTEND_DIR = os.path.join(os.path.dirname(BACKEND_DIR), "frontend")
+ROOT_DIR = os.path.dirname(os.path.dirname(BACKEND_DIR))
+PUBLIC_DIR = os.path.join(ROOT_DIR, "public")
+FRONTEND_DIR = PUBLIC_DIR if os.path.isdir(PUBLIC_DIR) else os.path.join(os.path.dirname(BACKEND_DIR), "frontend")
 
 app = Flask(__name__, static_folder=FRONTEND_DIR, static_url_path="")
 app.secret_key = os.environ.get("DERMASCAN_SECRET_KEY", "dev-only-change-me-for-real-use")
+app.config.update(
+    SESSION_COOKIE_HTTPONLY=True,
+    SESSION_COOKIE_SAMESITE="Lax",
+)
 CORS(app, supports_credentials=True)
 
 MODEL_PATH = os.path.join(BACKEND_DIR, "skin_model.h5")
@@ -57,13 +63,30 @@ def load_model_if_available():
         target_path = MODEL_KERAS_PATH
 
     if target_path:
-        import tensorflow as tf
-        _model = tf.keras.models.load_model(target_path)
-        _using_mock = False
-        print(f"[DermaScan] Loaded trained model from {target_path}")
+        try:
+            import tensorflow as tf
+            _model = tf.keras.models.load_model(target_path)
+            _using_mock = False
+            print(f"[DermaScan] Loaded trained model from {target_path}")
+        except Exception as e:
+            _using_mock = True
+            print(f"[DermaScan] Model loading failed ({e}) — serving MOCK predictions.")
     else:
         _using_mock = True
         print("[DermaScan] No trained model found — serving MOCK predictions.")
+
+
+# Initialize DB and model on module import (essential for Vercel Serverless WSGI)
+try:
+    db.init_db()
+except Exception as _e:
+    print(f"[DermaScan] DB initialization warning: {_e}")
+
+try:
+    load_model_if_available()
+except Exception as _e:
+    print(f"[DermaScan] Model initialization warning: {_e}")
+
 
 
 def mock_predict(image_array: np.ndarray) -> np.ndarray:
@@ -89,7 +112,15 @@ def login_required(fn):
 # ---------- Frontend ----------
 @app.route("/")
 def home():
-    return send_from_directory(FRONTEND_DIR, "index.html")
+    index_path = os.path.join(FRONTEND_DIR, "index.html")
+    if os.path.exists(index_path):
+        return send_from_directory(FRONTEND_DIR, "index.html")
+    return jsonify({
+        "status": "online",
+        "service": "DermaScan AI Backend",
+        "frontend": "Served statically via Vercel Edge Network"
+    })
+
 
 
 # ---------- Auth ----------
@@ -205,7 +236,29 @@ def health():
     return jsonify({"status": "ok", "mode": "mock" if _using_mock else "trained_model"})
 
 
+@app.route("/api", methods=["GET"])
+@app.route("/api/", methods=["GET"])
+def api_root():
+    return jsonify({
+        "name": "DermaScan AI API",
+        "status": "online",
+        "version": "2.0",
+        "mode": "mock" if _using_mock else "trained_model",
+        "endpoints": [
+            "/api/signup",
+            "/api/login",
+            "/api/logout",
+            "/api/me",
+            "/api/predict",
+            "/api/dashboard/stats",
+            "/api/contact",
+            "/api/health"
+        ]
+    })
+
+
 if __name__ == "__main__":
     db.init_db()
     load_model_if_available()
     app.run(port=5000)
+

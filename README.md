@@ -20,6 +20,7 @@
   - [Installation](#installation)
   - [Running the Web Application](#running-the-web-application)
 - [Running via Jupyter Notebook / Google Colab](#-running-via-jupyter-notebook--google-colab)
+- [Deploying to Vercel](#-deploying-to-vercel)
 - [API Endpoints](#-api-endpoints)
 - [Machine Learning Model](#-machine-learning-model)
   - [Dual Prediction Modes](#dual-prediction-modes)
@@ -91,34 +92,25 @@ graph TD
 
 ```text
 DermaScan/
-├── DermaScan_v3_LoginDashboardBot (1).ipynb   # Standalone notebook (Colab/Local runner)
-├── requirements.txt                          # Project dependency specifications
+├── api/
+│   └── index.py                              # Vercel serverless entrypoint (WSGI wrapper)
+├── public/                                   # High-speed static assets served via Vercel Edge CDN
+│   ├── index.html, dashboard.html, ...       # Frontend pages
+│   ├── css/style.css                         # Global glassmorphism styles & animations
+│   └── js/                                   # Frontend scripts (auth, dashboard, predict, bot)
+├── vercel.json                               # Vercel deployment configuration (routes & cleanUrls)
+├── .vercelignore                             # Deployment ignore list (excludes bulky dev files)
+├── requirements.txt                          # Lean production & Vercel serverless dependencies
+├── requirements-train.txt                    # Offline ML training dependencies (TF, Kaggle, CV2)
 ├── README.md                                 # Project documentation
 └── dermascan/
     ├── backend/                              # Python Flask backend & SQLite layer
     │   ├── app.py                            # Main Flask server & REST API
-    │   ├── db.py                             # SQLite data layer (users & scans)
+    │   ├── db.py                             # Serverless-aware SQLite layer (/tmp support)
     │   ├── model.py                          # CNN architecture (MobileNetV2)
-    │   ├── utils.py                          # Image preprocessing & OpenCV helpers
-    │   └── dermascan.db                      # SQLite database file (created on init)
-    └── frontend/                             # Web assets and pages
-        ├── index.html                        # Landing page
-        ├── login.html                        # User login
-        ├── signup.html                       # User registration
-        ├── dashboard.html                    # Analytics & history dashboard
-        ├── predict.html                      # Skin disease scanner
-        ├── chatbot.html                      # Interactive dermatology AI bot
-        ├── about.html                        # About page
-        ├── contact.html                      # Contact page
-        ├── css/
-        │   └── style.css                     # Global styles, dark theme, animations
-        └── js/
-            ├── site.js                       # Common UI scripts & navbar
-            ├── auth.js                       # Login / Signup handlers
-            ├── guard.js                      # Route protection guard
-            ├── dashboard.js                  # Stats & scan table renderer
-            ├── predict.js                    # Image upload & prediction client
-            └── chatbot.js                    # Chatbot conversation logic
+    │   ├── utils.py                          # Image preprocessing (Pillow & CV2 fallback)
+    │   └── dermascan.db                      # SQLite database file
+    └── frontend/                             # Source frontend files (synced with public/)
 ```
 
 ---
@@ -183,6 +175,53 @@ The repository includes `DermaScan_v3_LoginDashboardBot (1).ipynb` which can gen
 2. **In Google Colab**:
    - Upload `DermaScan_v3_LoginDashboardBot (1).ipynb` to [Google Colab](https://colab.research.google.com/).
    - Run all cells. In Step 5 & 6, an **ngrok** tunnel is automatically provisioned to give you a public URL to share and test.
+
+---
+
+## ☁️ Deploying to Vercel
+
+DermaScan AI is fully pre-configured for **1-click serverless deployment** to [Vercel](https://vercel.com/):
+- **Static Assets**: Automatically served via Vercel's global Edge CDN from `public/`.
+- **Serverless API**: Python Flask REST backend runs seamlessly on AWS Lambda via `api/index.py`.
+- **Database**: Ephemeral `/tmp` SQLite handling with auto-seeding allows testing dynamic features (signup, login, scans, history) without read-only filesystem errors.
+- **Lean Bundle Size**: Production dependencies (<60MB) are optimized to respect Vercel's 250MB uncompressed bundle limit.
+
+### Method 1: Deploy via GitHub (Recommended)
+
+1. **Push your code to GitHub**:
+   ```bash
+   git add .
+   git commit -m "Configure DermaScan for Vercel deployment"
+   git push origin main
+   ```
+2. **Import into Vercel**:
+   - Go to [vercel.com/new](https://vercel.com/new).
+   - Select and import your `DermaScan` repository.
+   - **Framework Preset**: Leave as **Other** (Vercel automatically detects `vercel.json` and `api/index.py`).
+   - **Root Directory**: `./` (default).
+3. **Environment Variables (Optional)**:
+   - Add `DERMASCAN_SECRET_KEY`: Enter a random secure string for production session signing.
+4. **Deploy**:
+   - Click **Deploy**. In under a minute, your application will be live at `https://your-project.vercel.app`!
+
+---
+
+### Method 2: Deploy via Vercel CLI
+
+1. **Install Vercel CLI**:
+   ```bash
+   npm install -g vercel
+   # or run directly with npx
+   ```
+2. **Deploy to Preview**:
+   ```bash
+   vercel
+   ```
+   Follow the interactive prompts to link your project.
+3. **Deploy to Production**:
+   ```bash
+   vercel --prod
+   ```
 
 ---
 
