@@ -20,19 +20,26 @@ from app import app
 class VercelPathMiddleware:
     """
     Normalizes incoming WSGI request paths.
-    If Vercel rewrites /api/(.*) and forwards the path stripped of '/api',
-    this middleware prepends '/api' so Flask routes like @app.route('/api/login')
-    match correctly.
+    Handles:
+      - PATH_INFO stripped of '/api' (e.g. '/signup' -> '/api/signup')
+      - Vercel passing script name like '/api/index.py' -> recovers path from HTTP_X_MATCHED_PATH / HTTP_X_FORWARDED_URI
+      - Empty or root -> '/api'
     """
     def __init__(self, wsgi_app):
         self.wsgi_app = wsgi_app
 
     def __call__(self, environ, start_response):
         path = environ.get("PATH_INFO", "")
+        matched = environ.get("HTTP_X_MATCHED_PATH") or environ.get("HTTP_X_FORWARDED_URI")
+        if path in ("", "/", "/api/index.py", "/api/index", "/index.py") and matched:
+            path = matched.split("?")[0]
+
         if not path or path == "/":
             environ["PATH_INFO"] = "/api"
         elif not path.startswith("/api"):
             environ["PATH_INFO"] = "/api" + path
+        else:
+            environ["PATH_INFO"] = path
         return self.wsgi_app(environ, start_response)
 
 

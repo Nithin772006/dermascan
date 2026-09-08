@@ -125,6 +125,7 @@ def home():
 
 # ---------- Auth ----------
 @app.route("/api/signup", methods=["POST"])
+@app.route("/signup", methods=["POST"])
 def signup():
     data = request.get_json(silent=True) or {}
     name = (data.get("name") or "").strip()
@@ -147,6 +148,7 @@ def signup():
 
 
 @app.route("/api/login", methods=["POST"])
+@app.route("/login", methods=["POST"])
 def login():
     data = request.get_json(silent=True) or {}
     email = (data.get("email") or "").strip().lower()
@@ -166,12 +168,14 @@ def login():
 
 
 @app.route("/api/logout", methods=["POST"])
+@app.route("/logout", methods=["POST"])
 def logout():
     session.clear()
     return jsonify({"status": "logged_out"})
 
 
 @app.route("/api/me", methods=["GET"])
+@app.route("/me", methods=["GET"])
 def me():
     if "user_id" not in session:
         return jsonify({"error": "Not logged in"}), 401
@@ -186,6 +190,7 @@ def me():
 
 # ---------- Prediction (protected) ----------
 @app.route("/api/predict", methods=["POST"])
+@app.route("/predict", methods=["POST"])
 @login_required
 def predict():
     if "image" not in request.files:
@@ -222,10 +227,23 @@ def predict():
 
 # ---------- Dashboard (protected) ----------
 @app.route("/api/dashboard/stats", methods=["GET"])
+@app.route("/dashboard/stats", methods=["GET"])
 @login_required
 def dashboard_stats():
     stats = db.get_dashboard_stats(session["user_id"])
     return jsonify(stats)
+
+
+# ---------- Error Handlers (Always JSON) ----------
+@app.errorhandler(404)
+def handle_404(e):
+    return jsonify({"error": "Endpoint not found", "path": request.path, "method": request.method}), 404
+
+
+@app.errorhandler(500)
+def handle_500(e):
+    return jsonify({"error": "Internal server error", "message": str(e)}), 500
+
 
 
 # ---------- Contact (public) ----------

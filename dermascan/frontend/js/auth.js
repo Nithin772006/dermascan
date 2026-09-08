@@ -29,7 +29,17 @@ if (loginForm) {
         credentials: "include",
         body: JSON.stringify(payload)
       });
-      const data = await res.json();
+      let data;
+      const ct = res.headers.get("content-type") || "";
+      if (ct.includes("application/json")) {
+        data = await res.json();
+      } else {
+        const text = await res.text();
+        if (text.includes("Vercel") && text.includes("Login")) {
+          throw new Error("Vercel Deployment Protection is active. Please turn off 'Vercel Authentication' in Vercel Project Settings -> Deployment Protection.");
+        }
+        throw new Error(res.status === 404 ? "API route /api/login not found (404)." : `Server returned non-JSON (${res.status})`);
+      }
       if (!res.ok) throw new Error(data.error || "Login failed");
       window.location.href = "dashboard.html";
     } catch (err) {
@@ -69,7 +79,17 @@ if (signupForm) {
         credentials: "include",
         body: JSON.stringify(payload)
       });
-      const data = await res.json();
+      let data;
+      const ct = res.headers.get("content-type") || "";
+      if (ct.includes("application/json")) {
+        data = await res.json();
+      } else {
+        const text = await res.text();
+        if (text.includes("Vercel") && text.includes("Login")) {
+          throw new Error("Vercel Deployment Protection is active. Please turn off 'Vercel Authentication' in Vercel Project Settings -> Deployment Protection.");
+        }
+        throw new Error(res.status === 404 ? "API route /api/signup not found (404)." : `Server returned non-JSON (${res.status})`);
+      }
       if (!res.ok) throw new Error(data.error || "Sign up failed");
       window.location.href = "dashboard.html";
     } catch (err) {
