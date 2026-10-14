@@ -4,52 +4,92 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Log in — DermaScan AI</title>
+<meta name="description" content="Sign in to your DermaScan AI personal account to access your scan history and condition breakdown.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
 <div class="auth-shell">
+  <!-- Supporting Editorial Visual Panel -->
   <div class="auth-visual">
-    <a href="index.html" class="brand"><span class="brand-mark">DS</span> DermaScan AI</a>
+    <a href="index.html" class="brand">
+      <span class="brand-mark">DS</span>
+      <span>DermaScan AI</span>
+      <span class="brand-badge">Clinical v2.0</span>
+    </a>
+
     <div class="pitch">
-      <h2>Every scan, tracked in one dashboard.</h2>
-      <p>Log in to pick up where you left off — your scan history, condition breakdown, and confidence trends are all saved to your account.</p>
+      <h2>Longitudinal skin tracking, securely archived.</h2>
+      <p>Log in to access your confidential scan vault, analyze progress over time, and consult your condition probability distributions.</p>
     </div>
-    <div class="scan-frame" style="max-width:340px;">
-      <div class="skin-swatch"></div>
-      <div class="lesion"></div>
-      <div class="scan-grid"></div>
-      <div class="scan-line"></div>
-      <div class="corner tl"></div><div class="corner tr"></div>
-      <div class="corner bl"></div><div class="corner br"></div>
+
+    <div class="auth-frame-card">
+      <div class="visual-topbar">
+        <div class="visual-title">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--teal-primary)" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span>Encrypted Session Vault</span>
+        </div>
+        <div class="visual-live-pill">Active</div>
+      </div>
+      <div style="margin-top:12px; font-size:0.86rem; color:var(--ink-secondary);">
+        Protected by secure signed session tokens and strict row-level isolation.
+      </div>
+    </div>
+
+    <div style="font-size:0.8rem; color:var(--ink-tertiary); position:relative; z-index:2;">
+      © 2026 DermaScan AI · Bug Slayers REC Chennai
     </div>
   </div>
 
+  <!-- Form Side -->
   <div class="auth-form-side">
     <div class="auth-card">
-      <div class="kicker">Welcome back</div>
+      <div class="auth-kicker">Welcome Back</div>
       <h1>Log in to your account</h1>
-      <p class="switcher">New here? <a href="signup.html">Create an account</a></p>
+      <p class="switcher">New to DermaScan? <a href="signup.html">Create an account</a></p>
 
-      <div class="auth-error" id="authError"></div>
+      <div class="auth-error" id="authError" role="alert"></div>
 
       <form id="loginForm">
         <div class="field">
-          <label for="email">Email</label>
-          <input type="email" id="email" required>
+          <label for="email">Email Address</label>
+          <input type="email" id="email" placeholder="name@domain.com" required autocomplete="email">
         </div>
+
         <div class="field">
-          <label for="password">Password</label>
-          <input type="password" id="password" required>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <label for="password" style="margin-bottom:0;">Password</label>
+            <button type="button" id="togglePasswordBtn" style="background:none; border:none; color:var(--teal-primary); font-size:0.78rem; font-weight:600; cursor:pointer;" aria-label="Toggle password visibility">Show</button>
+          </div>
+          <input type="password" id="password" placeholder="Enter your password" required autocomplete="current-password">
         </div>
+
         <button type="submit" class="btn btn-primary btn-block" id="loginBtn">Log in</button>
       </form>
+
+      <div style="margin-top:24px; text-align:center; font-size:0.82rem; color:var(--ink-secondary);">
+        <a href="index.html" style="color:var(--ink-secondary); display:inline-flex; align-items:center; gap:6px;">
+          <span>← Back to homepage</span>
+        </a>
+      </div>
     </div>
   </div>
 </div>
 
 <script src="js/auth.js"></script>
+<script>
+const toggleBtn = document.getElementById("togglePasswordBtn");
+const pwdInput = document.getElementById("password");
+if (toggleBtn && pwdInput) {
+  toggleBtn.addEventListener("click", () => {
+    const isPwd = pwdInput.type === "password";
+    pwdInput.type = isPwd ? "text" : "password";
+    toggleBtn.textContent = isPwd ? "Hide" : "Show";
+  });
+}
+</script>
 </body>
 </html>
