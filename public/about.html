@@ -3,113 +3,232 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>About — DermaScan AI</title>
+<title>About & Science — DermaScan AI</title>
+<meta name="description" content="Explore the deep learning architecture, HAM10000 benchmark dataset, and clinical relevance behind DermaScan AI.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-<nav class="navbar">
-  <div class="nav-inner">
-    <a href="index.html" class="brand"><span class="brand-mark">DS</span> DermaScan AI</a>
-    <div class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="about.html" class="active">About</a>
-      <a href="chatbot.html">AI Bot</a>
-      <a href="contact.html">Contact</a>
-      <a href="login.html" class="nav-cta" id="authNavLink">Log in</a>
+<header>
+  <nav class="navbar" aria-label="Main Navigation">
+    <div class="nav-inner">
+      <a href="index.html" class="brand">
+        <span class="brand-mark">DS</span>
+        <span>DermaScan AI</span>
+        <span class="brand-badge">Clinical v2.0</span>
+      </a>
+
+      <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html" class="active">About & Science</a>
+        <a href="chatbot.html">AI Assistant</a>
+        <a href="contact.html">Contact</a>
+        <a href="login.html" class="nav-cta" id="authNavLink">Log in</a>
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>
+</header>
 
-<section class="section container">
-  <div class="section-head">
-    <span class="section-tag">The project</span>
-    <h2 class="section-title">Why automated skin disease classification</h2>
-    <p class="section-desc">Skin diseases affect millions globally, and early detection is central to effective treatment — but accurate diagnosis usually requires an expert dermatologist, which is slow and costly to access. DermaScan AI uses a convolutional neural network to give both clinicians and everyday users an instant first read from a dermoscopic image, saved to a personal dashboard for tracking over time.</p>
-  </div>
-</section>
+<main>
+  <!-- Mission Statement -->
+  <section class="section container">
+    <div class="section-head">
+      <span class="section-tag teal">Clinical Motivation</span>
+      <h1 class="section-title">Bridging computer vision & accessible dermatology</h1>
+      <p class="section-desc">
+        Dermatological conditions impact over 1.9 billion individuals globally. Early detection of malignant lesions such as melanoma drastically improves patient outcomes — yet access to board-certified dermatologists is often constrained by geographic distance, specialist shortages, and cost. DermaScan AI explores how transfer-learned deep learning can offer rapid preliminary triage and personal tracking.
+      </p>
+    </div>
+  </section>
 
-<section class="section container">
-  <div class="section-head">
-    <span class="section-tag">Dataset</span>
-    <h2 class="section-title">HAM10000</h2>
-    <p class="section-desc">"Human Against Machine with 10000 training images" — a publicly available benchmark of labeled dermoscopic images, used here to train and validate the classifier.</p>
-  </div>
-  <div class="metric-grid">
-    <div class="metric-card"><div class="num">10,015</div><div class="lbl">Labeled images</div></div>
-    <div class="metric-card"><div class="num">4</div><div class="lbl">Target classes</div></div>
-    <div class="metric-card"><div class="num">224²</div><div class="lbl">Input resolution</div></div>
-    <div class="metric-card"><div class="num">80/20</div><div class="lbl">Train / validation split</div></div>
-  </div>
-</section>
+  <!-- Dataset Metrics -->
+  <section class="section container" style="padding-top:0;">
+    <div class="section-head">
+      <span class="section-tag coral">Medical Benchmark</span>
+      <h2 class="section-title">The HAM10000 Dataset</h2>
+      <p class="section-desc">
+        "Human Against Machine with 10,000 training images" (Tschandl et al.) is a premier open-access dermatoscopic benchmark collected across multi-site clinical centers, serving as the training and validation bedrock for DermaScan AI.
+      </p>
+    </div>
 
-<section class="section container">
-  <div class="section-head">
-    <span class="section-tag">Architecture</span>
-    <h2 class="section-title">Model pipeline</h2>
-    <p class="section-desc">Images are pre-processed with OpenCV, passed through a MobileNetV2 feature extractor (transfer learning), then a custom classification head trained for this task.</p>
-  </div>
-  <div class="arch-diagram">
-    <div class="arch-block"><b>Input</b>224×224×3</div>
-    <span class="arch-arrow">→</span>
-    <div class="arch-block"><b>Preprocess</b>Resize / Normalize</div>
-    <span class="arch-arrow">→</span>
-    <div class="arch-block"><b>MobileNetV2</b>Frozen base</div>
-    <span class="arch-arrow">→</span>
-    <div class="arch-block"><b>GAP</b>Pooling</div>
-    <span class="arch-arrow">→</span>
-    <div class="arch-block"><b>Dense 128</b>ReLU + Dropout</div>
-    <span class="arch-arrow">→</span>
-    <div class="arch-block"><b>Softmax</b>4 classes</div>
-  </div>
-</section>
+    <div class="metric-grid">
+      <div class="metric-card">
+        <div class="num">10,015</div>
+        <div class="lbl">Dermatoscopic Images</div>
+      </div>
+      <div class="metric-card">
+        <div class="num">7</div>
+        <div class="lbl">Diagnostic Classes</div>
+      </div>
+      <div class="metric-card">
+        <div class="num">224²</div>
+        <div class="lbl">Input Pixel Resolution</div>
+      </div>
+      <div class="metric-card">
+        <div class="num">80 / 20</div>
+        <div class="lbl">Train / Validation Split</div>
+      </div>
+    </div>
+  </section>
 
-<section class="section container">
-  <div class="section-head">
-    <span class="section-tag">Outcomes</span>
-    <h2 class="section-title">What this project delivers</h2>
-  </div>
-  <div class="timeline">
-    <div class="timeline-item"><h4>Trained deep learning model</h4><p>A CNN capable of classifying skin diseases with measurable accuracy, precision, recall and F1-score.</p></div>
-    <div class="timeline-item"><h4>Full-stack application</h4><p>Signup, login, an upload-and-diagnose flow, and a personal dashboard — not just a script.</p></div>
-    <div class="timeline-item"><h4>Clinical relevance</h4><p>Demonstrates how AI can assist doctors with early-stage detection rather than replace diagnosis.</p></div>
-    <div class="timeline-item"><h4>Research potential</h4><p>A foundation for further work in telemedicine deployment and academic research.</p></div>
-  </div>
-</section>
+  <!-- CNN Architecture Pipeline -->
+  <section class="section container">
+    <div class="section-head">
+      <span class="section-tag lavender">Model Architecture</span>
+      <h2 class="section-title">Transfer Learning with MobileNetV2</h2>
+      <p class="section-desc">
+        Leveraging ImageNet pre-trained weights allows our network to capture complex spatial gradients with reduced overfitting and rapid execution speed.
+      </p>
+    </div>
 
-<section class="section container">
-  <div class="section-head">
-    <span class="section-tag">Team</span>
-    <h2 class="section-title">Bug Slayers</h2>
-  </div>
-  <div class="team-grid">
-    <div class="team-card tilt-card"><div class="team-avatar">M</div><h4>Monu</h4><span>AIDS · REC Chennai</span></div>
-    <div class="team-card tilt-card"><div class="team-avatar">T2</div><h4>Teammate</h4><span>Bug Slayers</span></div>
-    <div class="team-card tilt-card"><div class="team-avatar">T3</div><h4>Teammate</h4><span>Bug Slayers</span></div>
-    <div class="team-card tilt-card"><div class="team-avatar">T4</div><h4>Teammate</h4><span>Bug Slayers</span></div>
-  </div>
-</section>
+    <div class="arch-diagram">
+      <div class="arch-block">
+        <b>Input Array</b>
+        <span>224×224×3 RGB</span>
+      </div>
+      <span class="arch-arrow">→</span>
+      <div class="arch-block">
+        <b>OpenCV Prep</b>
+        <span>Bilinear / Scale</span>
+      </div>
+      <span class="arch-arrow">→</span>
+      <div class="arch-block">
+        <b>MobileNetV2</b>
+        <span>Depthwise Base</span>
+      </div>
+      <span class="arch-arrow">→</span>
+      <div class="arch-block">
+        <b>Global Avg Pool</b>
+        <span>Feature Reduct.</span>
+      </div>
+      <span class="arch-arrow">→</span>
+      <div class="arch-block">
+        <b>Dense (128)</b>
+        <span>ReLU + Dropout</span>
+      </div>
+      <span class="arch-arrow">→</span>
+      <div class="arch-block" style="border-color:var(--teal-primary); background:var(--teal-light);">
+        <b style="color:var(--teal-primary);">Softmax Output</b>
+        <span>7 Class Probs</span>
+      </div>
+    </div>
+  </section>
 
-<footer class="container">
-  <div class="footer-inner">
-    <p>© 2026 DermaScan AI — Internship project, Bug Slayers team.</p>
-    <div class="footer-links"><a href="index.html">Home</a><a href="contact.html">Contact</a></div>
+  <!-- Key Project Outcomes -->
+  <section class="section container">
+    <div class="section-head">
+      <span class="section-tag teal">Project Outcomes</span>
+      <h2 class="section-title">Engineering & research contributions</h2>
+    </div>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <h4>High-Efficiency Multiclass Classifier</h4>
+        <p>Distinguishes subtle morphological differentiators between benign keratoses, melanocytic nevi, and hazardous malignancies with balanced precision and recall.</p>
+      </div>
+      <div class="timeline-item">
+        <h4>Full-Stack Telemedicine Prototype</h4>
+        <p>Complete end-to-end integration: secure cookie sessions, multipart image upload streams, SQL persistence, real-time probability charts, and interactive rule-based health assistant.</p>
+      </div>
+      <div class="timeline-item">
+        <h4>Patient-Centered Triage Experience</h4>
+        <p>Translates complex mathematical loss curves and tensor probabilities into readable, reassuring visual analytics designed to foster clinical partnership.</p>
+      </div>
+      <div class="timeline-item">
+        <h4>Extensible Research Architecture</h4>
+        <p>Engineered for lightweight deployment across serverless edge clouds and local workstations alike with zero configuration drift.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team Bug Slayers -->
+  <section class="section container">
+    <div class="section-head">
+      <span class="section-tag coral">Engineering Team</span>
+      <h2 class="section-title">Bug Slayers</h2>
+      <p class="section-desc">Developed by the Department of Artificial Intelligence & Data Science, Rajalakshmi Engineering College (REC), Chennai.</p>
+    </div>
+
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-avatar">M</div>
+        <h4>Monu</h4>
+        <span>Lead Researcher · AIDS REC</span>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">N</div>
+        <h4>Nithin</h4>
+        <span>Full-Stack & Systems · Bug Slayers</span>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">R</div>
+        <h4>Team Engineer</h4>
+        <span>Model & Validation · Bug Slayers</span>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">C</div>
+        <h4>Team Engineer</h4>
+        <span>Data & Pipeline · Bug Slayers</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Medical Safety & Trust Disclaimer -->
+  <section class="container">
+    <div class="medical-disclaimer-box">
+      <div class="disclaimer-head">
+        <span class="disclaimer-badge">Medical Notice</span>
+        <h3 class="disclaimer-title">Assistive screening, not medical advice</h3>
+      </div>
+      <p class="disclaimer-text">
+        DermaScan AI is intended strictly for educational and preliminary screening demonstration purposes. Machine learning models cannot replace dermatoscopic dermoscopy, histological biopsy, or clinical judgment. If you have concerns about skin changes or irregular lesions, please consult a qualified medical professional immediately.
+      </p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand-side">
+        <a href="index.html" class="brand">
+          <span class="brand-mark">DS</span>
+          <span>DermaScan AI</span>
+        </a>
+        <p>AI-assisted skin lesion screening and longitudinal monitoring for individuals and health educators.</p>
+      </div>
+
+      <div class="footer-nav-col">
+        <div class="footer-col-title">Navigation</div>
+        <a href="index.html">Home</a>
+        <a href="about.html">About & Science</a>
+        <a href="chatbot.html">AI Assistant</a>
+        <a href="contact.html">Contact Us</a>
+      </div>
+
+      <div class="footer-nav-col">
+        <div class="footer-col-title">Application</div>
+        <a href="login.html">Sign In</a>
+        <a href="signup.html">Create Account</a>
+        <a href="dashboard.html">Scan Dashboard</a>
+        <a href="predict.html">New Analysis</a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2026 DermaScan AI — Internship Project by Bug Slayers, AIDS Department, Rajalakshmi Engineering College, Chennai.</p>
+      <p>Academic & Research Use · HAM10000 Benchmark</p>
+    </div>
   </div>
 </footer>
 
 <script src="js/site.js"></script>
-<script>
-document.querySelectorAll('.tilt-card').forEach(card => {
-  card.addEventListener('mousemove', e => {
-    const r = card.getBoundingClientRect();
-    const x = (e.clientX - r.left) / r.width - 0.5;
-    const y = (e.clientY - r.top) / r.height - 0.5;
-    card.style.transform = `rotateY(${x * 12}deg) rotateX(${-y * 12}deg)`;
-  });
-  card.addEventListener('mouseleave', () => { card.style.transform = 'rotateY(0) rotateX(0)'; });
-});
-</script>
 </body>
 </html>

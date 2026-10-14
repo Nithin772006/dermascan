@@ -3,145 +3,379 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DermaScan AI — Skin Disease Classification</title>
+<title>DermaScan AI — Advanced Dermatology Classification & Screening</title>
+<meta name="description" content="AI-assisted skin lesion classification powered by deep learning and HAM10000 benchmark data. Analyze skin conditions, maintain personal scan histories, and learn about dermatological health.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-<nav class="navbar">
-  <div class="nav-inner">
-    <a href="index.html" class="brand"><span class="brand-mark">DS</span> DermaScan AI</a>
-    <div class="nav-links">
-      <a href="index.html" class="active">Home</a>
-      <a href="about.html">About</a>
-      <a href="chatbot.html">AI Bot</a>
-      <a href="contact.html">Contact</a>
-      <a href="login.html" class="nav-cta" id="authNavLink">Log in</a>
-    </div>
-  </div>
-</nav>
+<header>
+  <nav class="navbar" aria-label="Main Navigation">
+    <div class="nav-inner">
+      <a href="index.html" class="brand">
+        <span class="brand-mark">DS</span>
+        <span>DermaScan AI</span>
+        <span class="brand-badge">Clinical v2.0</span>
+      </a>
 
-<header class="container hero">
-  <div>
-    <span class="eyebrow"><span class="dot"></span> CNN-powered dermoscopic analysis</span>
-    <h1 class="headline">Detect skin conditions <span class="accent">before they escalate.</span></h1>
-    <p class="sub">DermaScan AI classifies skin lesions including melanoma, basal cell carcinoma, actinic keratosis, and nevi from a single dermoscopic image using a deep convolutional neural network — with a personal dashboard and an AI assistant to answer your questions.</p>
-    <div class="hero-actions">
-      <a href="signup.html" class="btn btn-primary">Create free account →</a>
-      <a href="chatbot.html" class="btn btn-ghost">Ask the AI Bot</a>
-    </div>
-    <div class="hero-stats">
-      <div><div class="stat-num">7</div><div class="stat-label">Conditions classified</div></div>
-      <div><div class="stat-num">10,015</div><div class="stat-label">Training images</div></div>
-      <div><div class="stat-num">&lt;2s</div><div class="stat-label">Prediction time</div></div>
-    </div>
-  </div>
+      <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
 
-  <canvas id="hero3d"></canvas>
+      <div class="nav-links">
+        <a href="index.html" class="active">Home</a>
+        <a href="about.html">About & Science</a>
+        <a href="chatbot.html">AI Assistant</a>
+        <a href="contact.html">Contact</a>
+        <a href="login.html" class="nav-cta" id="authNavLink">Log in</a>
+      </div>
+    </div>
+  </nav>
 </header>
 
-<section class="section container">
-  <div class="section-head">
-    <span class="section-tag">Workflow</span>
-    <h2 class="section-title">From photo to prediction in three steps</h2>
-    <p class="section-desc">Sign up once — every scan after that is saved to your personal dashboard.</p>
-  </div>
-  <div class="steps">
-    <div class="step-card"><div class="step-num">01</div><h3>Create an account</h3><p>A free account keeps a private history of every image you analyze.</p></div>
-    <div class="step-card"><div class="step-num">02</div><h3>Upload & analyze</h3><p>The image is pre-processed and passed through a trained CNN.</p></div>
-    <div class="step-card"><div class="step-num">03</div><h3>Track it on your dashboard</h3><p>See every past scan, condition breakdown, and confidence trend in one place.</p></div>
-  </div>
-</section>
+<main>
+  <!-- Hero Section -->
+  <section class="container hero">
+    <div>
+      <div class="eyebrow">
+        <span class="dot"></span>
+        <span>CNN-Powered Dermoscopic Analysis</span>
+      </div>
 
-<section class="section container" style="background:var(--bg-elevated); border-radius:24px;">
-  <div class="section-head">
-    <span class="section-tag">Capabilities</span>
-    <h2 class="section-title">Built for accuracy, scale and privacy</h2>
-  </div>
-  <div class="grid-3">
-    <div class="feature-card tilt-card"><div class="feature-icon">◆</div><h3>Multi-class classification</h3><p>A single model distinguishes between 7 clinically validated skin lesion categories on HAM10000.</p></div>
-    <div class="feature-card tilt-card"><div class="feature-icon">⚡</div><h3>Real-time prediction</h3><p>Results return in under two seconds — the experience feels instant.</p></div>
-    <div class="feature-card tilt-card"><div class="feature-icon">▦</div><h3>Personal dashboard</h3><p>Every scan, confidence score and trend is saved to your account.</p></div>
-    <div class="feature-card tilt-card"><div class="feature-icon">🤖</div><h3>AI Bot assistant</h3><p>Ask questions about skin conditions or the project, anytime.</p></div>
-    <div class="feature-card tilt-card"><div class="feature-icon">◈</div><h3>Privacy-focused</h3><p>Images are processed for the prediction only — never shared publicly.</p></div>
-    <div class="feature-card tilt-card"><div class="feature-icon">▤</div><h3>Metric-backed evaluation</h3><p>Accuracy, precision, recall and F1-score validate real performance.</p></div>
-  </div>
-</section>
+      <h1 class="headline">
+        Intelligent skin screening, <span class="accent-teal">clarity before escalation.</span>
+      </h1>
 
-<section class="section container">
-  <div class="section-head">
-    <span class="section-tag">Under the hood</span>
-    <h2 class="section-title">Technology stack</h2>
-  </div>
-  <div class="stack-strip">
-    <span class="stack-pill">Python</span>
-    <span class="stack-pill">TensorFlow</span>
-    <span class="stack-pill">Keras</span>
-    <span class="stack-pill">OpenCV</span>
-    <span class="stack-pill">Flask + SQLite</span>
-    <span class="stack-pill">HAM10000 dataset</span>
-    <span class="stack-pill">Three.js</span>
-  </div>
-</section>
+      <p class="sub">
+        DermaScan AI leverages transfer-learned convolutional neural networks trained on the rigorous HAM10000 medical benchmark to classify 7 distinct skin lesion categories — providing actionable preliminary screening, private scan tracking, and interactive dermatological guidance.
+      </p>
 
-<footer class="container">
-  <div class="footer-inner">
-    <p>© 2026 DermaScan AI — Internship project, Bug Slayers team.</p>
-    <div class="footer-links"><a href="about.html">About</a><a href="chatbot.html">AI Bot</a><a href="contact.html">Contact</a></div>
+      <div class="hero-actions">
+        <a href="signup.html" class="btn btn-primary">
+          <span>Start free scan</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="chatbot.html" class="btn btn-ghost">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4M8 15h.01M16 15h.01"/></svg>
+          <span>Ask AI Assistant</span>
+        </a>
+      </div>
+
+      <div class="hero-stats">
+        <div>
+          <div class="stat-num">7</div>
+          <div class="stat-label">HAM10000 Classes</div>
+        </div>
+        <div>
+          <div class="stat-num">10,015</div>
+          <div class="stat-label">Training Benchmarks</div>
+        </div>
+        <div>
+          <div class="stat-num">&lt;2s</div>
+          <div class="stat-label">Analysis Latency</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Signature Healthcare Analysis Visual -->
+    <div class="hero-visual-card">
+      <div class="visual-topbar">
+        <div class="visual-title">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--teal-primary)" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
+          <span>Dermal Spectrum Analysis</span>
+        </div>
+        <div class="visual-live-pill">Neural Active</div>
+      </div>
+
+      <div class="scanner-stage">
+        <div class="skin-texture"></div>
+
+        <!-- Biological Cell Pattern SVG -->
+        <svg class="cellular-canvas" viewBox="0 0 400 270" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="80" cy="60" r="24" fill="rgba(191,235,221,0.25)" stroke="rgba(14,130,123,0.15)"/>
+          <circle cx="95" cy="85" r="18" fill="rgba(245,216,120,0.18)" stroke="rgba(245,216,120,0.3)"/>
+          <circle cx="330" cy="70" r="28" fill="rgba(220,214,250,0.25)" stroke="rgba(124,111,196,0.2)"/>
+          <circle cx="310" cy="190" r="32" fill="rgba(191,235,221,0.22)" stroke="rgba(14,130,123,0.15)"/>
+          <circle cx="70" cy="210" r="26" fill="rgba(233,120,91,0.15)" stroke="rgba(233,120,91,0.25)"/>
+          <path d="M50 135 Q120 110 200 135 T350 135" stroke="rgba(14,130,123,0.12)" stroke-dasharray="4 4"/>
+          <path d="M50 155 Q120 175 200 155 T350 155" stroke="rgba(233,120,91,0.1)" stroke-dasharray="3 3"/>
+        </svg>
+
+        <!-- Dynamic Laser Scanning Beam -->
+        <div class="laser-sweep"></div>
+
+        <!-- Target Reticle & Lesion Model -->
+        <div class="target-reticle">
+          <div class="reticle-corner tl"></div>
+          <div class="reticle-corner tr"></div>
+          <div class="reticle-corner bl"></div>
+          <div class="reticle-corner br"></div>
+          <div class="target-lesion"></div>
+        </div>
+
+        <!-- Floating Context Tags -->
+        <div class="hero-floating-tag tag-1">
+          <span class="floating-icon teal">✓</span>
+          <div>
+            <div style="font-weight:700; color:var(--ink);">Melanocytic Nevi</div>
+            <div style="font-size:0.7rem; color:var(--ink-secondary);">Benign Cellular Structure</div>
+          </div>
+        </div>
+
+        <div class="hero-floating-tag tag-2">
+          <span class="floating-icon coral">★</span>
+          <div>
+            <div style="font-weight:700; color:var(--ink);">ABCDE Analysis</div>
+            <div style="font-size:0.7rem; color:var(--ink-secondary);">Border Symmetry Verified</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="visual-preview-data">
+        <div class="preview-row">
+          <span class="preview-row-title">Confidence Indicator (Benchmark)</span>
+          <span class="preview-row-value">94.2%</span>
+        </div>
+        <div class="preview-microbar">
+          <div class="preview-microbar-fill"></div>
+        </div>
+        <div class="preview-disclaimer-pill">Simulated clinical demonstration for preview</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Three-Step Workflow -->
+  <section class="section container">
+    <div class="section-head center">
+      <span class="section-tag teal">Clinical Workflow</span>
+      <h2 class="section-title">Seamless screening in three thoughtful steps</h2>
+      <p class="section-desc">Designed to bridge the gap between initial personal concern and licensed dermatological consultation.</p>
+    </div>
+
+    <div class="steps-container">
+      <div class="step-card">
+        <div class="step-header">
+          <div class="step-num">01</div>
+          <span class="step-badge">Private Account</span>
+        </div>
+        <h3>Create your secure profile</h3>
+        <p>Register securely in seconds. Your scan records, diagnostic probabilities, and historical dates remain confidentially linked to your private profile.</p>
+      </div>
+
+      <div class="step-card">
+        <div class="step-header">
+          <div class="step-num">02</div>
+          <span class="step-badge">OpenCV & CNN</span>
+        </div>
+        <h3>Upload close-up dermal photo</h3>
+        <p>Provide a well-lit photograph. Our preprocessing pipeline normalizes the image before passing it through the trained MobileNetV2 feature extractor.</p>
+      </div>
+
+      <div class="step-card">
+        <div class="step-header">
+          <div class="step-num">03</div>
+          <span class="step-badge">Longitudinal Record</span>
+        </div>
+        <h3>Review breakdown & track trends</h3>
+        <p>Inspect top condition likelihoods, review clinical warning flags, and monitor changes over time in your personal analytics dashboard.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Capabilities Bento Grid -->
+  <section class="section container">
+    <div class="section-head">
+      <span class="section-tag">Capabilities</span>
+      <h2 class="section-title">Scientific craftsmanship meets patient-centered UI</h2>
+      <p class="section-desc">DermaScan AI combines deep learning with understandable healthcare storytelling.</p>
+    </div>
+
+    <div class="bento-grid">
+      <!-- Bento 1: Multi-Class Engine (Span 8) -->
+      <div class="bento-card bento-span-8 tint-teal">
+        <div>
+          <div class="bento-icon teal">◆</div>
+          <h3>7-Class Dermatoscopic Categorization</h3>
+          <p>
+            Unlike binary classifiers, DermaScan AI distinguishes across 7 clinically validated skin conditions from the HAM10000 dataset: Actinic Keratosis, Basal Cell Carcinoma, Benign Keratosis, Dermatofibroma, Melanocytic Nevi, Vascular Lesions, and Melanoma.
+          </p>
+        </div>
+        <div class="bento-footer-pill">HAM10000 Multiclass Convolutional Network</div>
+      </div>
+
+      <!-- Bento 2: Longitudinal Dashboard (Span 4) -->
+      <div class="bento-card bento-span-4 tint-lavender">
+        <div>
+          <div class="bento-icon lavender">▦</div>
+          <h3>Personal Scan Dashboard</h3>
+          <p>
+            Track lesion evolutions over weeks or months. Every authenticated scan saves timestamped results, condition percentages, and potential flags.
+          </p>
+        </div>
+        <div class="bento-footer-pill">Encrypted User Vault</div>
+      </div>
+
+      <!-- Bento 3: AI Assistant (Span 4) -->
+      <div class="bento-card bento-span-4 tint-butter">
+        <div>
+          <div class="bento-icon butter">🤖</div>
+          <h3>Dermatology Assistant</h3>
+          <p>
+            Instant answers regarding lesion symptoms, the ABCDE rules of melanoma, skin barrier care, and dataset architecture questions.
+          </p>
+        </div>
+        <div class="bento-footer-pill">24/7 Educational Bot</div>
+      </div>
+
+      <!-- Bento 4: Rapid In-Memory Prediction (Span 4) -->
+      <div class="bento-card bento-span-4">
+        <div>
+          <div class="bento-icon teal">⚡</div>
+          <h3>Rapid Inference Pipeline</h3>
+          <p>
+            In-memory image array conversion and optimized feature extraction return full multiclass probability distributions in under two seconds.
+          </p>
+        </div>
+        <div class="bento-footer-pill">Low-Latency Processing</div>
+      </div>
+
+      <!-- Bento 5: Privacy by Design (Span 4) -->
+      <div class="bento-card bento-span-4 tint-coral">
+        <div>
+          <div class="bento-icon coral">🛡</div>
+          <h3>Privacy-Preserving Architecture</h3>
+          <p>
+            Uploaded scans are evaluated in protected user sessions and never broadcast or surfaced across public channels.
+          </p>
+        </div>
+        <div class="bento-footer-pill">Strict Session Isolation</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Condition Taxonomy Section -->
+  <section class="section container">
+    <div class="section-head">
+      <span class="section-tag teal">Taxonomy</span>
+      <h2 class="section-title">Classified conditions from HAM10000</h2>
+      <p class="section-desc">Our classifier evaluates images across 7 clinically documented lesion categories.</p>
+    </div>
+
+    <div class="conditions-showcase">
+      <div class="condition-pill-card">
+        <span class="cond-dot" style="background:#E9785B;"></span>
+        <span class="cond-name">Actinic Keratosis</span>
+        <span class="cond-code">akiec</span>
+      </div>
+      <div class="condition-pill-card">
+        <span class="cond-dot" style="background:#B83E48;"></span>
+        <span class="cond-name">Basal Cell Carcinoma</span>
+        <span class="cond-code">bcc</span>
+      </div>
+      <div class="condition-pill-card">
+        <span class="cond-dot" style="background:#7C6FC4;"></span>
+        <span class="cond-name">Benign Keratosis</span>
+        <span class="cond-code">bkl</span>
+      </div>
+      <div class="condition-pill-card">
+        <span class="cond-dot" style="background:#0E827B;"></span>
+        <span class="cond-name">Dermatofibroma</span>
+        <span class="cond-code">df</span>
+      </div>
+      <div class="condition-pill-card">
+        <span class="cond-dot" style="background:#2C6ECB;"></span>
+        <span class="cond-name">Melanocytic Nevi</span>
+        <span class="cond-code">nv</span>
+      </div>
+      <div class="condition-pill-card">
+        <span class="cond-dot" style="background:#237A57;"></span>
+        <span class="cond-name">Vascular Lesion</span>
+        <span class="cond-code">vasc</span>
+      </div>
+      <div class="condition-pill-card">
+        <span class="cond-dot" style="background:#DC2626;"></span>
+        <span class="cond-name">Melanoma</span>
+        <span class="cond-code">mel</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Technology Stack Section -->
+  <section class="section container">
+    <div class="section-head">
+      <span class="section-tag lavender">Engineering</span>
+      <h2 class="section-title">Under the hood</h2>
+      <p class="section-desc">Robust computer vision and lightweight web engineering.</p>
+    </div>
+
+    <div class="stack-strip">
+      <div class="stack-pill"><span class="stack-pill-dot"></span><span>Python 3.10+</span></div>
+      <div class="stack-pill"><span class="stack-pill-dot"></span><span>TensorFlow & Keras</span></div>
+      <div class="stack-pill"><span class="stack-pill-dot"></span><span>MobileNetV2 Transfer Learning</span></div>
+      <div class="stack-pill"><span class="stack-pill-dot"></span><span>OpenCV Image Preprocessing</span></div>
+      <div class="stack-pill"><span class="stack-pill-dot"></span><span>Flask REST API</span></div>
+      <div class="stack-pill"><span class="stack-pill-dot"></span><span>Supabase PostgreSQL + SQLite Fallback</span></div>
+      <div class="stack-pill"><span class="stack-pill-dot"></span><span>HAM10000 Dataset Benchmark</span></div>
+    </div>
+  </section>
+
+  <!-- Medical Safety & Trust Disclaimer -->
+  <section class="container">
+    <div class="medical-disclaimer-box">
+      <div class="disclaimer-head">
+        <span class="disclaimer-badge">Clinical Ethics & Safety Notice</span>
+        <h3 class="disclaimer-title">Informational screening assistance only</h3>
+      </div>
+      <p class="disclaimer-text">
+        DermaScan AI is an engineering research and preliminary triage tool developed using the HAM10000 academic dataset. It does not provide medical diagnoses, histological evaluations, or therapeutic recommendations. Machine learning models can produce false positives and false negatives. If you observe an irregular, growing, bleeding, or rapidly changing skin lesion, please consult a board-certified dermatologist or seek immediate clinical care.
+      </p>
+      <div class="disclaimer-note">
+        Always confirm any finding with professional clinical examination.
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand-side">
+        <a href="index.html" class="brand">
+          <span class="brand-mark">DS</span>
+          <span>DermaScan AI</span>
+        </a>
+        <p>
+          AI-assisted skin lesion screening and longitudinal monitoring for individuals and health educators.
+        </p>
+      </div>
+
+      <div class="footer-nav-col">
+        <div class="footer-col-title">Navigation</div>
+        <a href="index.html">Home</a>
+        <a href="about.html">About & Science</a>
+        <a href="chatbot.html">AI Assistant</a>
+        <a href="contact.html">Contact Us</a>
+      </div>
+
+      <div class="footer-nav-col">
+        <div class="footer-col-title">Application</div>
+        <a href="login.html">Sign In</a>
+        <a href="signup.html">Create Account</a>
+        <a href="dashboard.html">Scan Dashboard</a>
+        <a href="predict.html">New Analysis</a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2026 DermaScan AI — Internship Project by Bug Slayers, AIDS Department, Rajalakshmi Engineering College, Chennai.</p>
+      <p>Academic & Research Use · HAM10000 Benchmark</p>
+    </div>
   </div>
 </footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="js/site.js"></script>
-<script>
-const canvas = document.getElementById('hero3d');
-if (canvas && window.THREE) {
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(55, 1, 0.1, 100);
-  camera.position.z = 5;
-
-  const wireGeo = new THREE.IcosahedronGeometry(1.6, 1);
-  const wireMat = new THREE.MeshBasicMaterial({ color: 0x4fe8c9, wireframe: true, transparent: true, opacity: 0.55 });
-  const wireMesh = new THREE.Mesh(wireGeo, wireMat);
-  scene.add(wireMesh);
-
-  const particleGeo = new THREE.IcosahedronGeometry(1.9, 3);
-  const particleMat = new THREE.PointsMaterial({ color: 0xffb970, size: 0.035 });
-  const particles = new THREE.Points(particleGeo, particleMat);
-  scene.add(particles);
-
-  scene.add(new THREE.AmbientLight(0xffffff, 1));
-
-  function resize() {
-    const w = canvas.clientWidth, h = canvas.clientHeight;
-    camera.aspect = w / h; camera.updateProjectionMatrix();
-    renderer.setSize(w, h, false);
-  }
-  window.addEventListener('resize', resize);
-  setTimeout(resize, 50);
-
-  function animate() {
-    requestAnimationFrame(animate);
-    wireMesh.rotation.y += 0.004;
-    wireMesh.rotation.x += 0.002;
-    particles.rotation.y -= 0.0025;
-    renderer.render(scene, camera);
-  }
-  animate();
-}
-
-document.querySelectorAll('.tilt-card').forEach(card => {
-  card.addEventListener('mousemove', e => {
-    const r = card.getBoundingClientRect();
-    const x = (e.clientX - r.left) / r.width - 0.5;
-    const y = (e.clientY - r.top) / r.height - 0.5;
-    card.style.transform = `rotateY(${x * 14}deg) rotateX(${-y * 14}deg)`;
-  });
-  card.addEventListener('mouseleave', () => { card.style.transform = 'rotateY(0) rotateX(0)'; });
-});
-</script>
 </body>
 </html>

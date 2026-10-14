@@ -3,54 +3,109 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Bot — DermaScan AI</title>
+<title>AI Dermatology Assistant — DermaScan AI</title>
+<meta name="description" content="Ask our interactive AI Assistant about eczema, melanoma warning signs, acne, psoriasis, and the HAM10000 deep learning pipeline.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-<nav class="navbar">
-  <div class="nav-inner">
-    <a href="index.html" class="brand"><span class="brand-mark">DS</span> DermaScan AI</a>
-    <div class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="chatbot.html" class="active">AI Bot</a>
-      <a href="contact.html">Contact</a>
-      <a href="login.html" class="nav-cta" id="authNavLink">Log in</a>
-    </div>
-  </div>
-</nav>
+<header>
+  <nav class="navbar" aria-label="Main Navigation">
+    <div class="nav-inner">
+      <a href="index.html" class="brand">
+        <span class="brand-mark">DS</span>
+        <span>DermaScan AI</span>
+        <span class="brand-badge">Clinical v2.0</span>
+      </a>
 
-<section class="section container">
-  <div class="section-head">
-    <span class="section-tag">AI Bot</span>
-    <h2 class="section-title">Ask about skin conditions or this project</h2>
-    <p class="section-desc">A quick assistant for common questions — not a substitute for a dermatologist.</p>
-  </div>
+      <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
 
-  <div class="chat-shell">
-    <div class="chat-suggestions" id="suggestions">
-      <div class="chat-chip" data-q="What is eczema?">What is eczema?</div>
-      <div class="chat-chip" data-q="What are melanoma warning signs?">Melanoma warning signs?</div>
-      <div class="chat-chip" data-q="How does the model work?">How does the model work?</div>
-      <div class="chat-chip" data-q="How accurate is DermaScan?">How accurate is it?</div>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About & Science</a>
+        <a href="chatbot.html" class="active">AI Assistant</a>
+        <a href="contact.html">Contact</a>
+        <a href="login.html" class="nav-cta" id="authNavLink">Log in</a>
+      </div>
     </div>
-    <div class="chat-window" id="chatWindow">
-      <div class="chat-msg bot">Hi! I'm the DermaScan AI Bot. Ask me about eczema, melanoma, acne, psoriasis, or how this project works.</div>
-    </div>
-    <div class="chat-input-row">
-      <input type="text" id="chatInput" placeholder="Type your question...">
-      <button class="btn btn-primary" id="sendBtn">Send</button>
-    </div>
-  </div>
-</section>
+  </nav>
+</header>
 
-<footer class="container">
-  <div class="footer-inner">
-    <p>© 2026 DermaScan AI — Internship project, Bug Slayers team.</p>
-    <div class="footer-links"><a href="index.html">Home</a><a href="about.html">About</a><a href="contact.html">Contact</a></div>
+<main>
+  <section class="section container" style="padding-bottom: 24px;">
+    <div class="section-head center">
+      <span class="section-tag teal">Interactive Education</span>
+      <h1 class="section-title">Dermatology AI Assistant</h1>
+      <p class="section-desc">Quick, verified answers regarding common dermatological conditions, ABCDE rules, and model mechanics.</p>
+    </div>
+
+    <div class="chat-shell">
+      <div class="chat-suggestions" id="suggestions">
+        <button type="button" class="chat-chip" data-q="What is eczema?">What is eczema?</button>
+        <button type="button" class="chat-chip" data-q="What are melanoma warning signs?">Melanoma warning signs?</button>
+        <button type="button" class="chat-chip" data-q="How does the model work?">How does the model work?</button>
+        <button type="button" class="chat-chip" data-q="How accurate is DermaScan?">How accurate is DermaScan?</button>
+        <button type="button" class="chat-chip" data-q="What is the HAM10000 dataset?">HAM10000 dataset?</button>
+      </div>
+
+      <div class="chat-window" id="chatWindow">
+        <div class="chat-msg bot">
+          Hello! I am your DermaScan AI Assistant. Feel free to ask about skin lesions (such as melanoma, eczema, acne, or actinic keratosis), the ABCDE rule, or how our deep learning model operates.
+        </div>
+      </div>
+
+      <div class="chat-input-row">
+        <input type="text" id="chatInput" placeholder="Type a condition or question here (e.g. 'What is melanoma?')..." aria-label="Chat input field">
+        <button class="btn btn-primary" id="sendBtn" type="button">
+          <span>Send</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+        </button>
+      </div>
+
+      <p class="preview-disclaimer-pill" style="text-align:center; margin-top:10px;">
+        Informational triage bot. For real health concerns, consult a licensed healthcare professional.
+      </p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand-side">
+        <a href="index.html" class="brand">
+          <span class="brand-mark">DS</span>
+          <span>DermaScan AI</span>
+        </a>
+        <p>AI-assisted skin lesion screening and longitudinal monitoring for individuals and health educators.</p>
+      </div>
+
+      <div class="footer-nav-col">
+        <div class="footer-col-title">Navigation</div>
+        <a href="index.html">Home</a>
+        <a href="about.html">About & Science</a>
+        <a href="chatbot.html">AI Assistant</a>
+        <a href="contact.html">Contact Us</a>
+      </div>
+
+      <div class="footer-nav-col">
+        <div class="footer-col-title">Application</div>
+        <a href="login.html">Sign In</a>
+        <a href="signup.html">Create Account</a>
+        <a href="dashboard.html">Scan Dashboard</a>
+        <a href="predict.html">New Analysis</a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2026 DermaScan AI — Internship Project by Bug Slayers, AIDS Department, Rajalakshmi Engineering College, Chennai.</p>
+      <p>Academic & Research Use · HAM10000 Benchmark</p>
+    </div>
   </div>
 </footer>
 

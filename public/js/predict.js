@@ -1,5 +1,7 @@
 // ===========================================================
 // predict.js — used on predict.html (protected page)
+// Preserves: requireAuth(), drag-and-drop, /api/predict POST multipart,
+// DOM IDs: dropzone, fileInput, previewWrap, previewImg, analyzeBtn, resetBtn, resultEmpty, resultContent
 // ===========================================================
 requireAuth(); // from guard.js
 
@@ -14,20 +16,28 @@ const resultContent = document.getElementById("resultContent");
 
 let selectedFile = null;
 
-["dragenter", "dragover"].forEach(evt =>
-  dropzone.addEventListener(evt, e => { e.preventDefault(); dropzone.classList.add("drag-over"); })
-);
-["dragleave", "drop"].forEach(evt =>
-  dropzone.addEventListener(evt, e => { e.preventDefault(); dropzone.classList.remove("drag-over"); })
-);
-dropzone.addEventListener("drop", e => {
-  const file = e.dataTransfer.files[0];
-  if (file) handleFile(file);
-});
-fileInput.addEventListener("change", e => {
-  const file = e.target.files[0];
-  if (file) handleFile(file);
-});
+if (dropzone && fileInput) {
+  ["dragenter", "dragover"].forEach(evt =>
+    dropzone.addEventListener(evt, e => {
+      e.preventDefault();
+      dropzone.classList.add("drag-over");
+    })
+  );
+  ["dragleave", "drop"].forEach(evt =>
+    dropzone.addEventListener(evt, e => {
+      e.preventDefault();
+      dropzone.classList.remove("drag-over");
+    })
+  );
+  dropzone.addEventListener("drop", e => {
+    const file = e.dataTransfer.files[0];
+    if (file) handleFile(file);
+  });
+  fileInput.addEventListener("change", e => {
+    const file = e.target.files[0];
+    if (file) handleFile(file);
+  });
+}
 
 function handleFile(file) {
   if (!file.type.startsWith("image/")) {
@@ -44,60 +54,64 @@ function handleFile(file) {
   reader.readAsDataURL(file);
 }
 
-resetBtn.addEventListener("click", () => {
-  selectedFile = null;
-  fileInput.value = "";
-  previewWrap.style.display = "none";
-  previewWrap.classList.remove("scanning");
-  analyzeBtn.disabled = true;
-  resultEmpty.style.display = "flex";
-  resultContent.style.display = "none";
-  resultContent.innerHTML = "";
-});
-
-analyzeBtn.addEventListener("click", async () => {
-  if (!selectedFile) return;
-
-  analyzeBtn.disabled = true;
-  analyzeBtn.textContent = "Analyzing...";
-  previewWrap.classList.add("scanning");
-
-  const formData = new FormData();
-  formData.append("image", selectedFile);
-
-  try {
-    const res = await fetch(`${API_BASE}/api/predict`, {
-      method: "POST",
-      credentials: "include", // sends the session cookie so the backend can save this scan to your history
-      body: formData
-    });
-    if (res.status === 401) {
-      window.location.href = "login.html";
-      return;
-    }
-    if (!res.ok) throw new Error("Prediction request failed");
-    const data = await res.json();
-    renderResult(data);
-  } catch (err) {
-    renderError(err);
-  } finally {
+if (resetBtn) {
+  resetBtn.addEventListener("click", () => {
+    selectedFile = null;
+    fileInput.value = "";
+    previewWrap.style.display = "none";
     previewWrap.classList.remove("scanning");
-    analyzeBtn.disabled = false;
-    analyzeBtn.textContent = "Analyze image";
-  }
-});
+    analyzeBtn.disabled = true;
+    resultEmpty.style.display = "flex";
+    resultContent.style.display = "none";
+    resultContent.innerHTML = "";
+  });
+}
+
+if (analyzeBtn) {
+  analyzeBtn.addEventListener("click", async () => {
+    if (!selectedFile) return;
+
+    analyzeBtn.disabled = true;
+    analyzeBtn.textContent = "Analyzing scan...";
+    previewWrap.classList.add("scanning");
+
+    const formData = new FormData();
+    formData.append("image", selectedFile);
+
+    try {
+      const res = await fetch(`${API_BASE}/api/predict`, {
+        method: "POST",
+        credentials: "include", // sends session cookie to save scan to history
+        body: formData
+      });
+      if (res.status === 401) {
+        window.location.href = "login.html";
+        return;
+      }
+      if (!res.ok) throw new Error("Prediction request failed");
+      const data = await res.json();
+      renderResult(data);
+    } catch (err) {
+      renderError(err);
+    } finally {
+      previewWrap.classList.remove("scanning");
+      analyzeBtn.disabled = false;
+      analyzeBtn.textContent = "Analyze image";
+    }
+  });
+}
 
 function renderResult(data) {
   resultEmpty.style.display = "none";
   resultContent.style.display = "block";
 
-  const sorted = Object.entries(data.probabilities).sort((a, b) => b[1] - a[1]);
-  const isMelanoma = data.prediction.toLowerCase() === "melanoma";
+  const sorted = Object.entries(data.probabilities || {}).sort((a, b) => b[1] - a[1]);
+  const isMelanoma = (data.prediction || "").toLowerCase() === "melanoma";
 
   let html = `
     <div class="top-result">
       <div>
-        <div style="color:var(--text-muted); font-size:0.82rem; margin-bottom:4px;">Predicted condition</div>
+        <div style="color:var(--ink-secondary); font-size:0.84rem; font-weight:600; margin-bottom:4px; text-transform:uppercase; letter-spacing:0.04em;">Predicted condition</div>
         <div class="label">${data.prediction}</div>
       </div>
       <div class="confidence">${(data.confidence * 100).toFixed(1)}%</div>
@@ -105,8 +119,15 @@ function renderResult(data) {
   `;
 
   if (isMelanoma) {
-    html += `<div class="flag-note">⚠ Melanoma indicators detected — please consult a dermatologist for a clinical diagnosis.</div>`;
+    html += `
+      <div class="flag-note">
+        <span>⚠</span>
+        <div><strong>Clinical Attention Flag:</strong> Melanoma indicators were highlighted by the classifier. Please consult a qualified dermatologist for an in-person clinical biopsy and evaluation.</div>
+      </div>
+    `;
   }
+
+  html += `<div style="margin-bottom:12px; font-size:0.86rem; font-weight:700; color:var(--ink);">Probability Distribution</div>`;
 
   sorted.forEach(([label, prob]) => {
     const pct = (prob * 100).toFixed(1);
@@ -118,8 +139,15 @@ function renderResult(data) {
     `;
   });
 
-  html += `<p class="disclaimer">This is an AI-generated first read, not a medical diagnosis. Always confirm with a licensed dermatologist.</p>`;
-  html += `<p class="saved-note">✓ Saved to your dashboard history.</p>`;
+  html += `
+    <p class="disclaimer">
+      <strong>Medical Disclaimer:</strong> DermaScan AI provides automated image analysis for educational and preliminary screening assistance. This is not a definitive diagnosis. Always consult a healthcare professional for clinical decisions.
+    </p>
+    <div class="saved-note">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6L9 17l-5-5"/></svg>
+      Saved to your personal dashboard history.
+    </div>
+  `;
 
   resultContent.innerHTML = html;
 
@@ -135,7 +163,8 @@ function renderError(err) {
   resultContent.style.display = "block";
   resultContent.innerHTML = `
     <div class="flag-note">
-      Could not reach the prediction server. Make sure the Flask backend is running, then try again.
+      <span>⚠</span>
+      <div>Could not reach the prediction service. Please ensure the local server is running and try again.</div>
     </div>
   `;
   console.error(err);

@@ -3,57 +3,90 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sign up — DermaScan AI</title>
+<title>Create Free Account — DermaScan AI</title>
+<meta name="description" content="Register for DermaScan AI to start scanning skin images and access personal longitudinal tracking.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
 <div class="auth-shell">
+  <!-- Supporting Editorial Visual Panel -->
   <div class="auth-visual">
-    <a href="index.html" class="brand"><span class="brand-mark">DS</span> DermaScan AI</a>
+    <a href="index.html" class="brand">
+      <span class="brand-mark">DS</span>
+      <span>DermaScan AI</span>
+      <span class="brand-badge">Clinical v2.0</span>
+    </a>
+
     <div class="pitch">
-      <h2>Start your first scan in under a minute.</h2>
-      <p>Create a free account to get a personal dashboard that tracks every image you analyze and the condition breakdown over time.</p>
+      <h2>Begin proactive skin health tracking today.</h2>
+      <p>Set up your private account in under a minute to start saving image classifications, review probability spectra, and preserve longitudinal scan records.</p>
     </div>
-    <div class="scan-frame" style="max-width:340px;">
-      <div class="skin-swatch"></div>
-      <div class="lesion"></div>
-      <div class="scan-grid"></div>
-      <div class="scan-line"></div>
-      <div class="corner tl"></div><div class="corner tr"></div>
-      <div class="corner bl"></div><div class="corner br"></div>
+
+    <div class="auth-frame-card">
+      <div class="visual-topbar">
+        <div class="visual-title">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--teal-primary)" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
+          <span>What's Included</span>
+        </div>
+        <div class="visual-live-pill">Free Access</div>
+      </div>
+      <ul style="margin-top:14px; display:flex; flex-direction:column; gap:8px; font-size:0.86rem; color:var(--ink); list-style:none;">
+        <li style="display:flex; align-items:center; gap:8px;"><span style="color:var(--teal-primary); font-weight:700;">✓</span> 7-class HAM10000 neural predictions</li>
+        <li style="display:flex; align-items:center; gap:8px;"><span style="color:var(--teal-primary); font-weight:700;">✓</span> Private timestamped scan history</li>
+        <li style="display:flex; align-items:center; gap:8px;"><span style="color:var(--teal-primary); font-weight:700;">✓</span> 24/7 rule-based AI education bot</li>
+      </ul>
+    </div>
+
+    <div style="font-size:0.8rem; color:var(--ink-tertiary); position:relative; z-index:2;">
+      © 2026 DermaScan AI · Bug Slayers REC Chennai
     </div>
   </div>
 
+  <!-- Form Side -->
   <div class="auth-form-side">
     <div class="auth-card">
-      <div class="kicker">Get started</div>
+      <div class="auth-kicker">Get Started Free</div>
       <h1>Create your account</h1>
-      <p class="switcher">Already have one? <a href="login.html">Log in</a></p>
+      <p class="switcher">Already have an account? <a href="login.html">Log in here</a></p>
 
-      <div class="auth-error" id="authError"></div>
+      <div class="auth-error" id="authError" role="alert"></div>
 
       <form id="signupForm">
         <div class="field">
-          <label for="name">Full name</label>
-          <input type="text" id="name" required>
+          <label for="name">Full Name</label>
+          <input type="text" id="name" placeholder="Alex Morgan" required autocomplete="name">
         </div>
+
         <div class="field">
-          <label for="email">Email</label>
-          <input type="email" id="email" required>
+          <label for="email">Email Address</label>
+          <input type="email" id="email" placeholder="name@domain.com" required autocomplete="email">
         </div>
+
         <div class="field">
-          <label for="password">Password</label>
-          <input type="password" id="password" minlength="6" required>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <label for="password" style="margin-bottom:0;">Password</label>
+            <span style="font-size:0.75rem; color:var(--ink-tertiary);">Min 6 characters</span>
+          </div>
+          <input type="password" id="password" minlength="6" placeholder="Choose a secure password" required autocomplete="new-password">
         </div>
+
         <div class="field">
-          <label for="confirmPassword">Confirm password</label>
-          <input type="password" id="confirmPassword" minlength="6" required>
+          <label for="confirmPassword">Confirm Password</label>
+          <input type="password" id="confirmPassword" minlength="6" placeholder="Re-enter password" required autocomplete="new-password">
         </div>
+
         <button type="submit" class="btn btn-primary btn-block" id="signupBtn">Create account</button>
       </form>
+
+      <div style="margin-top:24px; text-align:center; font-size:0.82rem; color:var(--ink-secondary);">
+        <a href="index.html" style="color:var(--ink-secondary); display:inline-flex; align-items:center; gap:6px;">
+          <span>← Back to homepage</span>
+        </a>
+      </div>
     </div>
   </div>
 </div>

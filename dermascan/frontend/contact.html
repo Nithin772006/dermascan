@@ -3,58 +3,147 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Contact — DermaScan AI</title>
+<title>Contact & Collaboration — DermaScan AI</title>
+<meta name="description" content="Connect with the Bug Slayers research team at Rajalakshmi Engineering College regarding DermaScan AI and computer vision dermatology.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-<nav class="navbar">
-  <div class="nav-inner">
-    <a href="index.html" class="brand"><span class="brand-mark">DS</span> DermaScan AI</a>
-    <div class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="chatbot.html">AI Bot</a>
-      <a href="contact.html" class="active">Contact</a>
-      <a href="login.html" class="nav-cta" id="authNavLink">Log in</a>
+<header>
+  <nav class="navbar" aria-label="Main Navigation">
+    <div class="nav-inner">
+      <a href="index.html" class="brand">
+        <span class="brand-mark">DS</span>
+        <span>DermaScan AI</span>
+        <span class="brand-badge">Clinical v2.0</span>
+      </a>
+
+      <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About & Science</a>
+        <a href="chatbot.html">AI Assistant</a>
+        <a href="contact.html" class="active">Contact</a>
+        <a href="login.html" class="nav-cta" id="authNavLink">Log in</a>
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>
+</header>
 
-<section class="section container">
-  <div class="section-head">
-    <span class="section-tag">Get in touch</span>
-    <h2 class="section-title">Questions about the project</h2>
-    <p class="section-desc">Reach out about the model, the dataset, or collaborating on the next iteration.</p>
-  </div>
+<main>
+  <section class="section container">
+    <div class="section-head">
+      <span class="section-tag coral">Connect With Us</span>
+      <h1 class="section-title">Research inquiries & collaborations</h1>
+      <p class="section-desc">Reach out with questions regarding the HAM10000 training benchmarks, convolutional transfer learning, or educational partnerships.</p>
+    </div>
 
-  <div class="contact-layout">
-    <div>
-      <div class="info-list">
-        <div class="info-item"><div class="ic">✉</div><div><h4>Email</h4><p>bugslayers.team@example.com</p></div></div>
-        <div class="info-item"><div class="ic">🏛</div><div><h4>Institution</h4><p>Rajalakshmi Engineering College, Chennai</p></div></div>
-        <div class="info-item"><div class="ic">◈</div><div><h4>Team</h4><p>Bug Slayers — AIDS Department</p></div></div>
+    <div class="contact-layout">
+      <!-- Contact Channels -->
+      <div>
+        <div class="info-list">
+          <div class="info-item">
+            <div class="ic">✉</div>
+            <div>
+              <h4>Direct Research Inquiries</h4>
+              <p>bugslayers.team@example.com</p>
+            </div>
+          </div>
+
+          <div class="info-item">
+            <div class="ic" style="background:var(--teal-light); color:var(--teal-primary); border-color:var(--mint-border);">🏛</div>
+            <div>
+              <h4>Academic Institution</h4>
+              <p>Rajalakshmi Engineering College (REC), Chennai</p>
+            </div>
+          </div>
+
+          <div class="info-item">
+            <div class="ic" style="background:var(--lavender-light); color:#5841BD; border-color:var(--lavender-border);">◈</div>
+            <div>
+              <h4>Department</h4>
+              <p>Department of Artificial Intelligence & Data Science</p>
+            </div>
+          </div>
+
+          <div class="info-item">
+            <div class="ic" style="background:var(--butter-light); color:#8F720C; border-color:var(--butter-border);">★</div>
+            <div>
+              <h4>Project Group</h4>
+              <p>Team Bug Slayers — Internship Research Cohort</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact Form -->
+      <div class="form-card">
+        <form id="contactForm">
+          <div class="field">
+            <label for="name">Your Name</label>
+            <input type="text" id="name" placeholder="Dr. Jane Smith or Alex Taylor" required>
+          </div>
+
+          <div class="field">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" placeholder="name@institution.edu" required>
+          </div>
+
+          <div class="field">
+            <label for="message">Message or Research Inquiry</label>
+            <textarea id="message" rows="5" placeholder="Share your inquiry or feedback regarding DermaScan AI..." required></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block">
+            <span>Send message</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+          </button>
+
+          <p class="form-status" id="formStatus">Message sent — we'll get back to you soon.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand-side">
+        <a href="index.html" class="brand">
+          <span class="brand-mark">DS</span>
+          <span>DermaScan AI</span>
+        </a>
+        <p>AI-assisted skin lesion screening and longitudinal monitoring for individuals and health educators.</p>
+      </div>
+
+      <div class="footer-nav-col">
+        <div class="footer-col-title">Navigation</div>
+        <a href="index.html">Home</a>
+        <a href="about.html">About & Science</a>
+        <a href="chatbot.html">AI Assistant</a>
+        <a href="contact.html">Contact Us</a>
+      </div>
+
+      <div class="footer-nav-col">
+        <div class="footer-col-title">Application</div>
+        <a href="login.html">Sign In</a>
+        <a href="signup.html">Create Account</a>
+        <a href="dashboard.html">Scan Dashboard</a>
+        <a href="predict.html">New Analysis</a>
       </div>
     </div>
 
-    <div class="form-card">
-      <form id="contactForm">
-        <div class="field"><label for="name">Name</label><input type="text" id="name" required></div>
-        <div class="field"><label for="email">Email</label><input type="email" id="email" required></div>
-        <div class="field"><label for="message">Message</label><textarea id="message" rows="5" required></textarea></div>
-        <button type="submit" class="btn btn-primary">Send message</button>
-        <p class="form-status" id="formStatus">Message sent — we'll get back to you soon.</p>
-      </form>
+    <div class="footer-bottom">
+      <p>© 2026 DermaScan AI — Internship Project by Bug Slayers, AIDS Department, Rajalakshmi Engineering College, Chennai.</p>
+      <p>Academic & Research Use · HAM10000 Benchmark</p>
     </div>
-  </div>
-</section>
-
-<footer class="container">
-  <div class="footer-inner">
-    <p>© 2026 DermaScan AI — Internship project, Bug Slayers team.</p>
-    <div class="footer-links"><a href="index.html">Home</a><a href="about.html">About</a></div>
   </div>
 </footer>
 
