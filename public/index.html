@@ -81,68 +81,206 @@
     </div>
 
     <!-- Signature Healthcare Analysis Visual -->
-    <div class="hero-visual-card">
+    <!-- Signature Healthcare Analysis Visual (Cinematic AI Telemetry Stage) -->
+    <div class="hero-visual-card" id="heroVisualCard">
       <div class="visual-topbar">
         <div class="visual-title">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--teal-primary)" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
-          <span>Dermal Spectrum Analysis</span>
+          <span class="pulse-optic" aria-hidden="true"></span>
+          <span class="visual-title-text">SpectroDerm AI™ Neural Analysis</span>
         </div>
-        <div class="visual-live-pill">Neural Active</div>
+        <div class="visual-status-pill" id="heroScanStatusPill">
+          <span class="status-indicator"></span>
+          <span id="heroScanStatus">NEURAL SCAN ACTIVE</span>
+        </div>
       </div>
 
-      <div class="scanner-stage">
-        <div class="skin-texture"></div>
+      <div class="scanner-stage" id="scannerStage">
+        <!-- Ambient Depth Stage Lighting -->
+        <div class="stage-glow glow-teal" aria-hidden="true"></div>
+        <div class="stage-glow glow-lavender" aria-hidden="true"></div>
+        <div class="stage-glow glow-coral" aria-hidden="true"></div>
 
-        <!-- Biological Cell Pattern SVG -->
-        <svg class="cellular-canvas" viewBox="0 0 400 270" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="80" cy="60" r="24" fill="rgba(191,235,221,0.25)" stroke="rgba(14,130,123,0.15)"/>
-          <circle cx="95" cy="85" r="18" fill="rgba(245,216,120,0.18)" stroke="rgba(245,216,120,0.3)"/>
-          <circle cx="330" cy="70" r="28" fill="rgba(220,214,250,0.25)" stroke="rgba(124,111,196,0.2)"/>
-          <circle cx="310" cy="190" r="32" fill="rgba(191,235,221,0.22)" stroke="rgba(14,130,123,0.15)"/>
-          <circle cx="70" cy="210" r="26" fill="rgba(233,120,91,0.15)" stroke="rgba(233,120,91,0.25)"/>
-          <path d="M50 135 Q120 110 200 135 T350 135" stroke="rgba(14,130,123,0.12)" stroke-dasharray="4 4"/>
-          <path d="M50 155 Q120 175 200 155 T350 155" stroke="rgba(233,120,91,0.1)" stroke-dasharray="3 3"/>
+        <!-- Telemetry Precision Coordinates & Orbital Paths -->
+        <svg class="stage-grid-svg" viewBox="0 0 500 400" preserveAspectRatio="xMidYMid slice" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <linearGradient id="connectorGradient1" x1="160" y1="130" x2="105" y2="70" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#0E827B" stop-opacity="0.85"/>
+              <stop offset="100%" stop-color="#20BFB0" stop-opacity="0.2"/>
+            </linearGradient>
+            <linearGradient id="connectorGradient2" x1="330" y1="260" x2="380" y2="330" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#E9785B" stop-opacity="0.85"/>
+              <stop offset="100%" stop-color="#F5D878" stop-opacity="0.2"/>
+            </linearGradient>
+          </defs>
+
+          <!-- Coordinate Grid System -->
+          <g opacity="0.45">
+            <line x1="50" y1="200" x2="450" y2="200" stroke="rgba(14, 130, 123, 0.12)" stroke-dasharray="4 6"/>
+            <line x1="250" y1="40" x2="250" y2="360" stroke="rgba(14, 130, 123, 0.12)" stroke-dasharray="4 6"/>
+            <circle cx="250" cy="200" r="170" stroke="rgba(14, 130, 123, 0.08)" stroke-width="1"/>
+          </g>
+
+          <!-- Concentric Orbital Telemetry Rings -->
+          <circle class="ring-track ring-outer" cx="250" cy="200" r="148" stroke="rgba(14, 130, 123, 0.22)" stroke-width="1.2" stroke-dasharray="8 14 3 14"/>
+          <circle class="ring-track ring-mid" cx="250" cy="200" r="126" stroke="rgba(233, 120, 91, 0.28)" stroke-width="1.2" stroke-dasharray="16 10 4 10"/>
+          <circle class="ring-track ring-inner" cx="250" cy="200" r="105" stroke="rgba(32, 191, 176, 0.35)" stroke-width="1.5" stroke-dasharray="6 8"/>
+
+          <!-- Confirmation Circular Sweep Wave (triggers on Stage D) -->
+          <circle class="confirmation-wave" cx="250" cy="200" r="106"/>
+
+          <!-- Animated Telemetry Connector Vectors -->
+          <path class="connector-path connector-1" d="M 180 155 Q 140 120 110 75" />
+          <circle class="connector-node node-1" cx="180" cy="155" r="3.5" />
+          <circle class="connector-node-target" cx="110" cy="75" r="2.5" />
+
+          <path class="connector-path connector-2" d="M 315 240 Q 355 275 390 325" />
+          <circle class="connector-node node-2" cx="315" cy="240" r="3.5" />
+          <circle class="connector-node-target" cx="390" cy="325" r="2.5" />
+
+          <!-- Floating Micro Cellular Particles -->
+          <circle class="cell-particle p1" cx="85" cy="120" r="18" fill="rgba(191, 235, 221, 0.35)" stroke="rgba(14, 130, 123, 0.2)"/>
+          <circle class="cell-particle p2" cx="410" cy="100" r="22" fill="rgba(220, 214, 250, 0.38)" stroke="rgba(124, 111, 196, 0.22)"/>
+          <circle class="cell-particle p3" cx="120" cy="310" r="16" fill="rgba(245, 216, 120, 0.3)" stroke="rgba(200, 170, 70, 0.2)"/>
+          <circle class="cell-particle p4" cx="380" cy="260" r="14" fill="rgba(233, 120, 91, 0.2)" stroke="rgba(233, 120, 91, 0.25)"/>
+          <circle class="cell-particle p5" cx="290" cy="65" r="10" fill="rgba(191, 235, 221, 0.45)"/>
+          <circle class="cell-particle p6" cx="170" cy="340" r="12" fill="rgba(220, 214, 250, 0.35)"/>
+
+          <!-- Orbit Precision Tick Markers -->
+          <circle class="tick-node" cx="250" cy="52" r="3"/>
+          <circle class="tick-node" cx="398" cy="200" r="3"/>
+          <circle class="tick-node" cx="250" cy="348" r="3"/>
+          <circle class="tick-node" cx="102" cy="200" r="3"/>
         </svg>
 
-        <!-- Dynamic Laser Scanning Beam -->
-        <div class="laser-sweep"></div>
+        <!-- 3D Dermatology Specimen Visual -->
+        <div class="specimen-container" id="specimenContainer">
+          <div class="specimen-halo" aria-hidden="true"></div>
+          <div class="specimen-reticle" aria-hidden="true">
+            <div class="corner-bracket br-tl"></div>
+            <div class="corner-bracket br-tr"></div>
+            <div class="corner-bracket br-bl"></div>
+            <div class="corner-bracket br-br"></div>
+            <div class="crosshair-axis axis-x"></div>
+            <div class="crosshair-axis axis-y"></div>
+          </div>
+          <div class="specimen-epidermis">
+            <svg class="specimen-svg" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="3D Stylized Dermatology Specimen">
+              <defs>
+                <radialGradient id="skinBaseGrad" cx="35%" cy="30%" r="70%">
+                  <stop offset="0%" stop-color="#FCECE2"/>
+                  <stop offset="40%" stop-color="#F3D1BE"/>
+                  <stop offset="75%" stop-color="#E2B39B"/>
+                  <stop offset="100%" stop-color="#C6937A"/>
+                </radialGradient>
+                <radialGradient id="coreMelanin" cx="44%" cy="42%" r="56%">
+                  <stop offset="0%" stop-color="#9C5940"/>
+                  <stop offset="28%" stop-color="#733923"/>
+                  <stop offset="62%" stop-color="#461E11"/>
+                  <stop offset="85%" stop-color="#2D1107"/>
+                  <stop offset="100%" stop-color="#190703"/>
+                </radialGradient>
+                <radialGradient id="subsurfaceRed" cx="48%" cy="48%" r="50%">
+                  <stop offset="0%" stop-color="#FF7F50" stop-opacity="0.45"/>
+                  <stop offset="50%" stop-color="#D94B26" stop-opacity="0.25"/>
+                  <stop offset="100%" stop-color="#801800" stop-opacity="0"/>
+                </radialGradient>
+                <radialGradient id="rimSpecular" cx="30%" cy="25%" r="45%">
+                  <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.65"/>
+                  <stop offset="45%" stop-color="#FFEADA" stop-opacity="0.2"/>
+                  <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+                </radialGradient>
+              </defs>
 
-        <!-- Target Reticle & Lesion Model -->
-        <div class="target-reticle">
-          <div class="reticle-corner tl"></div>
-          <div class="reticle-corner tr"></div>
-          <div class="reticle-corner bl"></div>
-          <div class="reticle-corner br"></div>
-          <div class="target-lesion"></div>
-        </div>
+              <!-- Base Epidermal Tissue Disc -->
+              <rect width="200" height="200" rx="98" fill="url(#skinBaseGrad)"/>
+              
+              <!-- Fine Papillary Dermal Texture Granules -->
+              <g opacity="0.22" fill="#7C4633">
+                <circle cx="45" cy="50" r="1.5"/><circle cx="70" cy="38" r="1"/><circle cx="130" cy="45" r="1.5"/>
+                <circle cx="160" cy="68" r="1.2"/><circle cx="35" cy="120" r="1.3"/><circle cx="165" cy="135" r="1.5"/>
+                <circle cx="60" cy="165" r="1.2"/><circle cx="135" cy="165" r="1.4"/><circle cx="95" cy="178" r="1"/>
+              </g>
 
-        <!-- Floating Context Tags -->
-        <div class="hero-floating-tag tag-1">
-          <span class="floating-icon teal">✓</span>
-          <div>
-            <div style="font-weight:700; color:var(--ink);">Melanocytic Nevi</div>
-            <div style="font-size:0.7rem; color:var(--ink-secondary);">Benign Cellular Structure</div>
+              <!-- Subsurface Hemoglobin Flare -->
+              <ellipse cx="102" cy="100" rx="66" ry="60" fill="url(#subsurfaceRed)"/>
+
+              <!-- Organic Stylized Pigmented Lesion Specimen (Curated educational specimen) -->
+              <path class="lesion-core-path" d="M102,46 C136,44 163,68 158,102 C154,134 135,158 98,155 C64,152 42,128 45,96 C48,64 72,48 102,46 Z" fill="url(#coreMelanin)"/>
+
+              <!-- Melanin Variegation Zones -->
+              <path d="M88,68 C112,65 132,82 128,105 C124,124 105,136 84,132 C68,128 62,110 65,92 C68,76 74,70 88,68 Z" fill="#200A04" opacity="0.65"/>
+              <circle cx="120" cy="92" r="14" fill="#6E2F1B" opacity="0.55"/>
+              <circle cx="82" cy="116" r="11" fill="#42190B" opacity="0.7"/>
+
+              <!-- Specular Rim Light Reflection -->
+              <ellipse cx="80" cy="68" rx="48" ry="32" fill="url(#rimSpecular)"/>
+            </svg>
+            <div class="specimen-shimmer" aria-hidden="true"></div>
           </div>
         </div>
 
-        <div class="hero-floating-tag tag-2">
-          <span class="floating-icon coral">★</span>
-          <div>
-            <div style="font-weight:700; color:var(--ink);">ABCDE Analysis</div>
-            <div style="font-size:0.7rem; color:var(--ink-secondary);">Border Symmetry Verified</div>
+        <!-- Dynamic Laser Scanning Sweep -->
+        <div class="cinematic-laser-sweep" aria-hidden="true">
+          <div class="laser-trail-glow"></div>
+          <div class="laser-beam-core"></div>
+          <div class="laser-beam-lead"></div>
+        </div>
+
+        <!-- Floating HUD Telemetry Card 1: Structural Morphology -->
+        <div class="hud-telemetry-card card-top-left">
+          <div class="hud-card-icon teal">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
           </div>
+          <div class="hud-card-body">
+            <div class="hud-card-title">Melanocytic Nevi</div>
+            <div class="hud-card-meta">
+              <span class="hud-tag">Uniform Cellular Margin</span>
+              <span class="hud-dot-pulse"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Floating HUD Telemetry Card 2: ABCDE Clinical Rule -->
+        <div class="hud-telemetry-card card-bottom-right">
+          <div class="hud-card-icon coral">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 3"></path></svg>
+          </div>
+          <div class="hud-card-body">
+            <div class="hud-card-title">ABCDE Analysis</div>
+            <div class="hud-card-meta">
+              <span class="hud-tag">Bilateral Symmetry: 0.98</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Floating Micro Sensor Badge -->
+        <div class="hud-micro-badge">
+          <span class="sensor-indicator"></span>
+          <span>450nm Spectral Sensor</span>
         </div>
       </div>
 
+      <!-- Refined Confidence Telemetry Section -->
       <div class="visual-preview-data">
         <div class="preview-row">
-          <span class="preview-row-title">Confidence Indicator (Benchmark)</span>
-          <span class="preview-row-value">94.2%</span>
+          <div class="preview-metric-group">
+            <span class="preview-row-title">Confidence Metric</span>
+            <span class="preview-model-tag">CNN-Ensemble</span>
+          </div>
+          <div class="preview-metric-value">
+            <span class="preview-num">94.2%</span>
+            <span class="preview-status-tag">Optimal</span>
+          </div>
         </div>
         <div class="preview-microbar">
-          <div class="preview-microbar-fill"></div>
+          <div class="preview-microbar-fill">
+            <div class="microbar-laser-head"></div>
+          </div>
         </div>
-        <div class="preview-disclaimer-pill">Simulated clinical demonstration for preview</div>
+        <div class="preview-footer-row">
+          <span class="preview-disclaimer-pill">Simulated clinical demonstration for preview</span>
+          <span class="preview-latency-pill">Latency: 1.84s</span>
+        </div>
       </div>
     </div>
   </section>
